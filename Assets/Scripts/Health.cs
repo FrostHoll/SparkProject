@@ -44,13 +44,13 @@ public class Health : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         HP -= damage;
         Green_HP.fillAmount = HP / MaxHP;
     }
 
-    public void Hiealing(float healingAmount)
+    public virtual void Hiealing(float healingAmount)
     {
         if (HP + healingAmount >= MaxHP) 
         {
