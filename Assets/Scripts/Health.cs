@@ -36,7 +36,7 @@ public class Health : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.E)) //для проверки
         {
-            Hieal(10f);
+            Hiealing(10f);
         }
         if (Input.GetKeyUp(KeyCode.R))
         {
@@ -50,7 +50,7 @@ public class Health : MonoBehaviour
         Green_HP.fillAmount = HP / MaxHP;
     }
 
-    public void Hieal(float healingAmount)
+    public void Hiealing(float healingAmount)
     {
         if (HP + healingAmount >= MaxHP) 
         {
