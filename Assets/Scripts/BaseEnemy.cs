@@ -1,37 +1,37 @@
-using System;
-using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BaseEnemy : MonoBehaviour
 {
     public float rotationSpeed = 45f;
-    public float enemySpeed = 10;
-    private bool isAngry = false;
-    public Health enemyHeath;
-    public Transform player;
 
-    private void Update()
+    public NavMeshAgent agent;
+    [SerializeField] EnemyAttackTrigger enemyAttackTrigger;
+
+
+    private void Start()
     {
-        if (isAngry)
-        {
-            LookAtPlayer(player.transform);
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, enemySpeed * Time.deltaTime);
-        }
+        agent = GetComponent<NavMeshAgent>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void LookAtTarget(Transform target) //поворачивает с сторону таргета
     {
-        if (other.CompareTag("Player"))
-        {
-            isAngry = true;
-        }
-    }
-
-    private void LookAtPlayer(Transform player)
-    {
-        Vector3 targetDirection = player.position - transform.position;
+        Vector3 targetDirection = target.position - transform.position;
         targetDirection.y = 0;
         Quaternion targetEnemyRotation = Quaternion.LookRotation(targetDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetEnemyRotation, Time.deltaTime * rotationSpeed);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            agent.SetDestination(other.transform.position);
+        }
+    }
+
+    public void Attack()
+    {
+        enemyAttackTrigger.EnemyAttack();
     }
 }
