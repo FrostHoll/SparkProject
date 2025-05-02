@@ -1482,7 +1482,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1330919170}
-  - component: {fileID: 1330919169}
+  - component: {fileID: 1330919177}
   - component: {fileID: 1330919173}
   - component: {fileID: 1330919171}
   - component: {fileID: 1330919174}
@@ -1495,21 +1495,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1330919169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1330919168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fafbab29dc3b0d4ebb131a3474b03e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationSpeed: 8
-  agent: {fileID: 1330919174}
-  enemyAttackTrigger: {fileID: 1661394712}
 --- !u!4 &1330919170
 Transform:
   m_ObjectHideFlags: 0
@@ -1536,8 +1521,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1330919168}
   serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 10
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -1571,7 +1556,7 @@ MonoBehaviour:
   HP: 100
   lerpSpeedRed: 0.4
   reducedSpeedRed: 0.18
-  lerpSpeedYellow: 1
+  reducedSpeedYellow: 1
   redHP: {fileID: 1401481615}
   yellowHP: {fileID: 1776711079}
   greenHP: {fileID: 1733615913}
@@ -1641,6 +1626,23 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 8
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1330919177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330919168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e8d808b2607b4042a6fbf320ca4adce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 45
+  isAngry: 0
+  player: {fileID: 0}
+  agent: {fileID: 1330919174}
+  attackTrigger: {fileID: 1661394712}
 --- !u!1 &1372096489
 GameObject:
   m_ObjectHideFlags: 0
@@ -2071,7 +2073,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyDamage: 10
   animator: {fileID: 1330919175}
-  baseEnemy: {fileID: 1330919169}
+  baseEnemy: {fileID: 0}
 --- !u!4 &1661394713
 Transform:
   m_ObjectHideFlags: 0
@@ -2190,7 +2192,6 @@ MonoBehaviour:
       m_Action: Player Controls
       m_Flags: 8
     m_Flags: 0
-  speed: 8
 --- !u!54 &1695931021
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2199,8 +2200,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1695931019}
   serializedVersion: 4
-  m_Mass: 5
-  m_Drag: 8
+  m_Mass: 10
+  m_Drag: 10
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -2250,7 +2251,7 @@ MonoBehaviour:
   HP: 100
   lerpSpeedRed: 0.4
   reducedSpeedRed: 0.18
-  lerpSpeedYellow: 1
+  reducedSpeedYellow: 1
   redHP: {fileID: 2133747128}
   yellowHP: {fileID: 122283360}
   greenHP: {fileID: 1761195396}
