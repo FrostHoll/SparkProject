@@ -6,7 +6,7 @@ public class EnemyAttackTrigger : MonoBehaviour
     private Health PlayerHealth;
     private bool isAttacking = false;
     [SerializeField] private Animator animator;
-    [SerializeField] private BaseEnemy baseEnemy;
+    [SerializeField] private EnemyWithStick baseEnemy;
 
 
     private void OnTriggerEnter(Collider other)
