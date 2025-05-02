@@ -8,9 +8,9 @@ public class Health : MonoBehaviour
     private float fillAmountHP = 0;
 
     [Header("LerpSpeeds")]
-    public float lerpSpeedRed = 0.4f; //скорость заполнения красной полоски
-    public float reducedSpeedRed = 0.18f; //скорость уменьшения красной полоски
-    public float reducedSpeedYellow = 1; //скорость уменьшения жёлтой полоски
+    public float RedFillingSpeed = 0.4f; //скорость заполнения красной полоски
+    public float RedDecreaseSpeed = 0.18f; //скорость уменьшения красной полоски
+    public float YellowDecreaseSpeed = 1; //скорость уменьшения жёлтой полоски
     [Header("Image")]
     public Image redHP;
     public Image yellowHP;
@@ -30,8 +30,8 @@ public class Health : MonoBehaviour
         if (greenHP.fillAmount != redHP.fillAmount)
         {
             lerpTime += Time.deltaTime;
-            redHP.fillAmount = Mathf.Lerp(redHP.fillAmount, fillAmountHP, redHP.fillAmount > greenHP.fillAmount ? lerpTime / reducedSpeedRed : lerpTime / lerpSpeedRed);
-            yellowHP.fillAmount = Mathf.Lerp(yellowHP.fillAmount, fillAmountHP, yellowHP.fillAmount > redHP.fillAmount ? lerpTime / reducedSpeedYellow : 1);
+            redHP.fillAmount = Mathf.Lerp(redHP.fillAmount, fillAmountHP, redHP.fillAmount > greenHP.fillAmount ? lerpTime / RedDecreaseSpeed : lerpTime / RedFillingSpeed);
+            yellowHP.fillAmount = Mathf.Lerp(yellowHP.fillAmount, fillAmountHP, yellowHP.fillAmount > redHP.fillAmount ? lerpTime / YellowDecreaseSpeed : 1);
         }
 
         if (Input.GetKeyUp(KeyCode.E)) //для проверки

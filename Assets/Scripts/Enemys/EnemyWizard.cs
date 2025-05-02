@@ -10,14 +10,6 @@ public class EnemyWizard : BaseEnemy
 
     public GameObject bullet;
     [SerializeField]private Transform shotPoint;
-    private RandomTransformGenerator transformGenerator;
-    private Animator animator;
-
-    private void Start()
-    {
-        transformGenerator = GetComponent<RandomTransformGenerator>();
-        animator = GetComponent<Animator>();
-    }
 
     private void Update()
     {
@@ -48,6 +40,6 @@ public class EnemyWizard : BaseEnemy
 
     public void EnemyTeleportation()
     {
-        transform.position = transformGenerator.CreateRandomTransformNearObject(player, teleportMaxRadius, teleportMinRadius, teleportHeight);
+        transform.position = RandomTransformGenerator.CreateRandomTransformNearObject(player, teleportMaxRadius, teleportMinRadius, teleportHeight);
     }
 }

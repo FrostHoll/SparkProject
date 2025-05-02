@@ -114,8 +114,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 875406780505370910}
-  - component: {fileID: 7633585328252343094}
-  - component: {fileID: 7028221195308267934}
   m_Layer: 6
   m_Name: EnemyAttack
   m_TagString: Untagged
@@ -138,42 +136,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5984045730258968141}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7633585328252343094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 515925349797605643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfbc4d363bb1d1c42a2830f1d49f4827, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyDamage: 10
-  animator: {fileID: 3885074002849617526}
-  baseEnemy: {fileID: 4993372806827755195}
---- !u!135 &7028221195308267934
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 515925349797605643}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.25
-  m_Center: {x: 0, y: 0, z: 0.98}
 --- !u!1 &2010708647875493303
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,6 +506,56 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &6012887663460596569
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6601424025132935651}
+  - component: {fileID: 1044018117447599383}
+  m_Layer: 6
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6601424025132935651
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6012887663460596569}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.61, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4476418422973265021}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1044018117447599383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6012887663460596569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfbc4d363bb1d1c42a2830f1d49f4827, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyDamage: 10
+  weaponLenght: 3
+  isAttacking: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &6894183548781895193
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,11 +683,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8d808b2607b4042a6fbf320ca4adce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 45
+  rotationSpeed: 4
   isAngry: 0
-  player: {fileID: 0}
   agent: {fileID: 6638769064725229132}
-  attackTrigger: {fileID: 7633585328252343094}
+  player: {fileID: 0}
+  animator: {fileID: 0}
+  attackRange: 3
+  enemyMeleeAttack: {fileID: 1044018117447599383}
 --- !u!114 &1286639829594079579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -690,9 +704,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHP: 100
   HP: 100
-  lerpSpeedRed: 0.4
-  reducedSpeedRed: 0.18
-  reducedSpeedYellow: 1
+  RedFillingSpeed: 0.4
+  RedDecreaseSpeed: 0.18
+  YellowDecreaseSpeed: 1
   redHP: {fileID: 2458627853482786270}
   yellowHP: {fileID: 4548341093435951025}
   greenHP: {fileID: 363454309273431937}
@@ -820,7 +834,8 @@ Transform:
   m_LocalPosition: {x: 0.5550003, y: 0.5259999, z: 0}
   m_LocalScale: {x: 0.10962, y: 0.63553, z: 0.102540374}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6601424025132935651}
   m_Father: {fileID: 3446527959950097926}
   m_LocalEulerAnglesHint: {x: 9.165, y: 0, z: 0}
 --- !u!33 &3580296399490191621

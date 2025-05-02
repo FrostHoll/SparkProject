@@ -7,13 +7,14 @@ public abstract class BaseEnemy : MonoBehaviour
 
     public bool isAngry = false;
 
-    public Transform player;
-
     public NavMeshAgent agent;
+    public Transform player;
+    public Animator animator;
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -37,7 +38,7 @@ public abstract class BaseEnemy : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            isAngry= false;
+            isAngry = false;
         }
     }
 
