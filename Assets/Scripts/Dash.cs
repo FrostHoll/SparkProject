@@ -2,17 +2,31 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XR.Haptics;
 
-public class Dash : MonoBehaviour
+class Dash : MonoBehaviour, IDash
 {
-    public InputAction playerControls;
+    private InputSystem_Actions inputActions;
+
     private Rigidbody rb;
     private PlayerMovement ms;
     private PlayerLookAtMouse plams;
-    public float TimeOfDash = 1f;
-    public float TeckTimer = 0f;
-    public float DashIncreaseSpeed = 5f;
+
+    [SerializeField] private float timeOfDash = 0.5f;
+    [SerializeField] private float dashIncreaseSpeed = 5f;
+
+    public float TeckTimer;
+
     public bool DASH = false;
     
+    public float TimeOfDash
+    {
+        get { return timeOfDash; }
+        set { timeOfDash = value; }
+    }
+    public float DashIncreaseSpeed
+    {
+        get { return dashIncreaseSpeed; }
+        set { dashIncreaseSpeed = value; }
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -21,18 +35,32 @@ public class Dash : MonoBehaviour
         plams = GetComponent<PlayerLookAtMouse>();
     }
 
+    private void Awake()
+    {
+        inputActions = new InputSystem_Actions();
+        inputActions.Enable();
+    }
+    private void OnEnable()
+    {
+        inputActions.Player.Dash.performed += DashPerformed;
+    }
+    private void OnDisable()
+    {
+        inputActions.Player.Dash.performed -= DashPerformed;
+    }
+    private void DashPerformed(InputAction.CallbackContext obj)
+    {
+        if (!DASH)
+        {
+            DASH = true;
+            TeckTimer = TimeOfDash;
+            ms.enabled = false;
+            plams.enabled = false;
+        }
+    }
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            if (!DASH) {
-                DASH = true;
-                TeckTimer = TimeOfDash;
-                ms.enabled = false;
-                plams.enabled = false;
-            }
-        }
         if (DASH == true)
         {
             TeckTimer -= Time.deltaTime;
@@ -45,4 +73,10 @@ public class Dash : MonoBehaviour
             plams.enabled = true;
         }
     }
+}
+
+interface IDash
+{
+    float TimeOfDash { get; set; }
+    float DashIncreaseSpeed { get; set; }
 }
