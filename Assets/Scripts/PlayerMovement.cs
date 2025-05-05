@@ -5,7 +5,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public InputAction playerControls;
 
-    public float speed = 5f;
+    public float speed = 10;
 
     private Rigidbody rb;
 

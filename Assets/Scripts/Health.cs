@@ -5,38 +5,38 @@ public class Health : MonoBehaviour
 {
     public float MaxHP = 100f;
     public float HP = 100;
-    private float fillAmount_HP = 0;
+    private float fillAmountHP = 0;
 
-    [Header("lerpSpeeds")]
-    public float lerpSpeed_Red = 0.4f;
-    public float reducedSpeed_Red = 0.18f;
-    public float lerpSpeed_Yellow = 1;
+    [Header("LerpSpeeds")]
+    public float RedFillingSpeed = 0.4f; //скорость заполнения красной полоски
+    public float RedDecreaseSpeed = 0.18f; //скорость уменьшения красной полоски
+    public float YellowDecreaseSpeed = 1; //скорость уменьшения жёлтой полоски
     [Header("Image")]
-    public Image Red_HP;
-    public Image Yellow_HP;
-    public Image Green_HP;
+    public Image redHP;
+    public Image yellowHP;
+    public Image greenHP;
 
     void Start()
     {
-        Red_HP.fillAmount = HP / MaxHP;
+        redHP.fillAmount = HP / MaxHP;
     }
 
     void Update()
     {
-        fillAmount_HP = HP / MaxHP;
+        fillAmountHP = HP / MaxHP;
 
         float lerpTime = 0f;
 
-        if (Green_HP.fillAmount != Red_HP.fillAmount)
+        if (greenHP.fillAmount != redHP.fillAmount)
         {
             lerpTime += Time.deltaTime;
-            Red_HP.fillAmount = Mathf.Lerp(Red_HP.fillAmount, fillAmount_HP, Red_HP.fillAmount > Green_HP.fillAmount ? lerpTime / reducedSpeed_Red : lerpTime / lerpSpeed_Red);
-            Yellow_HP.fillAmount = Mathf.Lerp(Yellow_HP.fillAmount, fillAmount_HP, Yellow_HP.fillAmount > Red_HP.fillAmount ? lerpTime / lerpSpeed_Yellow : 1);
+            redHP.fillAmount = Mathf.Lerp(redHP.fillAmount, fillAmountHP, redHP.fillAmount > greenHP.fillAmount ? lerpTime / RedDecreaseSpeed : lerpTime / RedFillingSpeed);
+            yellowHP.fillAmount = Mathf.Lerp(yellowHP.fillAmount, fillAmountHP, yellowHP.fillAmount > redHP.fillAmount ? lerpTime / YellowDecreaseSpeed : 1);
         }
 
         if (Input.GetKeyUp(KeyCode.E)) //для проверки
         {
-            Hiealing(10f);
+            ApplyHealing(10f);
         }
         if (Input.GetKeyUp(KeyCode.R))
         {
@@ -44,21 +44,21 @@ public class Health : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         HP -= damage;
-        Green_HP.fillAmount = HP / MaxHP;
+        greenHP.fillAmount = HP / MaxHP;
     }
 
-    public void Hiealing(float healingAmount)
+    public virtual void ApplyHealing(float amount)
     {
-        if (HP + healingAmount >= MaxHP) 
+        if (HP + amount >= MaxHP) 
         {
             HP = MaxHP;
-            Green_HP.fillAmount = HP / MaxHP;
+            greenHP.fillAmount = HP / MaxHP;
             return;
         }
-        HP += healingAmount;
-        Green_HP.fillAmount = HP / MaxHP;
+        HP += amount;
+        greenHP.fillAmount = HP / MaxHP;
     }
 }
