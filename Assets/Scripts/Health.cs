@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
-    public float MaxHP = 100f;
+    public BaseStats entityStats;
     public float HP = 100;
     private float fillAmountHP = 0;
 
@@ -18,12 +18,12 @@ public class Health : MonoBehaviour
 
     void Start()
     {
-        redHP.fillAmount = HP / MaxHP;
+        redHP.fillAmount = HP / entityStats.MaxHP;
     }
 
     void Update()
     {
-        fillAmountHP = HP / MaxHP;
+        fillAmountHP = HP / entityStats.MaxHP;
 
         float lerpTime = 0f;
 
@@ -46,19 +46,26 @@ public class Health : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
-        HP -= damage;
-        greenHP.fillAmount = HP / MaxHP;
+        if (HP - (damage * (100/(100 + entityStats.Armor))) <= 0)
+        {
+            HP = 0;
+        }
+        else
+        {
+            HP -= damage * (100 / (100 + entityStats.Armor));
+        }
+        greenHP.fillAmount = HP / entityStats.MaxHP;
     }
 
     public virtual void ApplyHealing(float amount)
     {
-        if (HP + amount >= MaxHP) 
+        if (HP + amount >= entityStats.MaxHP) 
         {
-            HP = MaxHP;
-            greenHP.fillAmount = HP / MaxHP;
+            HP = entityStats.MaxHP;
+            greenHP.fillAmount = HP / entityStats.MaxHP;
             return;
         }
         HP += amount;
-        greenHP.fillAmount = HP / MaxHP;
+        greenHP.fillAmount = HP / entityStats.MaxHP;
     }
 }

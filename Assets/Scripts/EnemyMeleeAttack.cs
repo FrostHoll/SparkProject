@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class EnemyMeleeAttack : MonoBehaviour
 {
-    public float enemyDamage = 10f;
-    public float weaponLength = 2;
+    [SerializeField] private EnemyStats enemyStats;
+
     public bool isAttacking = false;
     public LayerMask layerMask; // с чем будет взаимодействовать
 
@@ -12,12 +12,12 @@ public class EnemyMeleeAttack : MonoBehaviour
         if (isAttacking) 
         {
             RaycastHit hit;
-
-            if (Physics.Raycast(transform.position,-transform.up, out hit,weaponLength , layerMask))
+            
+            if (Physics.Raycast(transform.position,-transform.up, out hit,enemyStats.AttackRange , layerMask))
             {
                 if (hit.transform.TryGetComponent(out Health health))
                 {
-                    health.TakeDamage(enemyDamage);
+                    health.TakeDamage(enemyStats.Damage);
                     isAttacking = false;
                 }
             }
@@ -27,6 +27,6 @@ public class EnemyMeleeAttack : MonoBehaviour
     private void OnDrawGizmos() // просто показывает облость рейкаста
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position,transform.position - transform.up * weaponLength);
+        Gizmos.DrawLine(transform.position, transform.position - transform.up * enemyStats.AttackRange);
     }
 }
