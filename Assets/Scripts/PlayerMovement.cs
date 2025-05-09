@@ -1,11 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public interface IMoveSpeed
+{
+    float Speed { get; set; }
+}
+
 public class PlayerMovement : MonoBehaviour
 {
     public InputAction playerControls;
 
-    public float speed = 10;
+    [SerializeField] private CharacterStats characterStats;
 
     private Rigidbody rb;
 
@@ -21,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (inputs != Vector2.zero)
         {
-            rb.linearVelocity = new Vector3(inputs.x, 0f, inputs.y) * speed;
+            rb.linearVelocity = new Vector3(inputs.x, 0f, inputs.y) * characterStats.Speed;
         }
     }
 }

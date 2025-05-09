@@ -3,6 +3,7 @@ using UnityEngine.AI;
 
 public abstract class BaseEnemy : MonoBehaviour
 {
+    public EnemyStats enemyStats;
     public float rotationSpeed = 2f;
 
     public bool isAngry = false;
@@ -15,6 +16,9 @@ public abstract class BaseEnemy : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        GetComponent<SphereCollider>().radius = enemyStats.AgrRadius;
+        agent.speed = enemyStats.Speed;
+        animator.speed = enemyStats.AttackSpeed; //временно
     }
 
     private void Update()

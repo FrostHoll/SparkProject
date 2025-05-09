@@ -1,8 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR.Haptics;
 
-class Dash : MonoBehaviour, IDash
+public interface IDash
+{
+    float TimeOfDash { get; set; }
+    float DashIncreaseSpeed { get; set; }
+}
+
+class Dash : MonoBehaviour
 {
     private InputSystem_Actions inputActions;
 
@@ -10,24 +15,12 @@ class Dash : MonoBehaviour, IDash
     private PlayerMovement ms;
     private PlayerLookAtMouse plams;
 
-    [SerializeField] private float timeOfDash = 0.5f;
-    [SerializeField] private float dashIncreaseSpeed = 5f;
-
     public float TeckTimer;
 
     public bool DASH = false;
-    
-    public float TimeOfDash
-    {
-        get { return timeOfDash; }
-        set { timeOfDash = value; }
-    }
-    public float DashIncreaseSpeed
-    {
-        get { return dashIncreaseSpeed; }
-        set { dashIncreaseSpeed = value; }
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    [SerializeField] private CharacterStats characterStats;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -40,6 +33,7 @@ class Dash : MonoBehaviour, IDash
         inputActions = new InputSystem_Actions();
         inputActions.Enable();
     }
+
     private void OnEnable()
     {
         inputActions.Player.Dash.performed += DashPerformed;
@@ -48,23 +42,24 @@ class Dash : MonoBehaviour, IDash
     {
         inputActions.Player.Dash.performed -= DashPerformed;
     }
+
     private void DashPerformed(InputAction.CallbackContext obj)
     {
         if (!DASH)
         {
             DASH = true;
-            TeckTimer = TimeOfDash;
+            TeckTimer = characterStats.TimeOfDash;
             ms.enabled = false;
             plams.enabled = false;
         }
     }
-    // Update is called once per frame
+
     void Update()
     {
         if (DASH == true)
         {
             TeckTimer -= Time.deltaTime;
-            rb.linearVelocity = transform.forward * DashIncreaseSpeed * ms.speed;
+            rb.linearVelocity = transform.forward * characterStats.DashIncreaseSpeed * characterStats.Speed;
         }
         if (TeckTimer <= 0)
         {
@@ -75,8 +70,4 @@ class Dash : MonoBehaviour, IDash
     }
 }
 
-interface IDash
-{
-    float TimeOfDash { get; set; }
-    float DashIncreaseSpeed { get; set; }
-}
+
