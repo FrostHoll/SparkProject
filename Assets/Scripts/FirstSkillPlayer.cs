@@ -49,7 +49,7 @@ public class FirstSkillPlayer : MonoBehaviour
             Collider[] colliders = Physics.OverlapSphere(hitInfo.point, explosionRadius, surfaceLayer);
             foreach (Collider hit1 in colliders)
             {
-                EnemyHealth health = hit1.GetComponent<EnemyHealth>();
+                Health health = hit1.GetComponent<Health>(); 
                 if (health != null)
                 {
                     health.TakeDamage(skillDamage);
