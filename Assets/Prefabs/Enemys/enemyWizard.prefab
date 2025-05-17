@@ -10,11 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4410674562036089105}
   - component: {fileID: 5665905517626493207}
-  - component: {fileID: 2216529021467451494}
   - component: {fileID: 8805761580316762848}
   - component: {fileID: 1176276737450656073}
   - component: {fileID: 4426471331188465238}
   - component: {fileID: 2372995184454977745}
+  - component: {fileID: 1817535839615384611}
+  - component: {fileID: 2945118240085711521}
   m_Layer: 6
   m_Name: enemyWizard
   m_TagString: Untagged
@@ -52,6 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b057dc2aa3b6624d892b8887d2b9b1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyStats: {fileID: 0}
   rotationSpeed: 4
   isAngry: 0
   agent: {fileID: 0}
@@ -63,27 +65,6 @@ MonoBehaviour:
   teleportTime: 2
   bullet: {fileID: 8350511591580038962, guid: 9757acec0993cc64c87017c70ed81045, type: 3}
   shotPoint: {fileID: 8130300660705100562}
---- !u!114 &2216529021467451494
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 67157182439231719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbfb01ea31e6cd94cb5a152abd6bbfcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxHP: 100
-  HP: 100
-  RedFillingSpeed: 0.4
-  RedDecreaseSpeed: 0.18
-  YellowDecreaseSpeed: 1
-  redHP: {fileID: 8397984040770922514}
-  yellowHP: {fileID: 4099610558032549304}
-  greenHP: {fileID: 1318860125066646695}
-  enemyCanvas: {fileID: 9077133935973996095}
 --- !u!54 &8805761580316762848
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -176,6 +157,39 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 12
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1817535839615384611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67157182439231719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7811afaee72ced8468f08be1e1e39160, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RedFillingSpeed: 0.4
+  RedDecreaseSpeed: 0.18
+  YellowDecreaseSpeed: 1
+  redHP: {fileID: 8397984040770922514}
+  yellowHP: {fileID: 4099610558032549304}
+  greenHP: {fileID: 1318860125066646695}
+  enemyCanvas: {fileID: 9077133935973996095}
+--- !u!114 &2945118240085711521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67157182439231719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc71919bcd8d88e4da80755b1446b246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseStats: {fileID: 11400000, guid: 74f9a0b0a8860914e9622b3202d33cc2, type: 2}
+  HP: 100
 --- !u!1 &2729985801587337515
 GameObject:
   m_ObjectHideFlags: 0

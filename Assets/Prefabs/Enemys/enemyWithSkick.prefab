@@ -640,7 +640,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5984045730258968141}
   - component: {fileID: 4993372806827755195}
-  - component: {fileID: 1286639829594079579}
+  - component: {fileID: 7834055413759348190}
+  - component: {fileID: 7394367513635779418}
   - component: {fileID: 651489480518349887}
   - component: {fileID: 6638769064725229132}
   - component: {fileID: 3885074002849617526}
@@ -690,7 +691,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   attackRange: 2.5
   enemyMeleeAttack: {fileID: 1044018117447599383}
---- !u!114 &1286639829594079579
+--- !u!114 &7834055413759348190
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -699,11 +700,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 7261159090481387345}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbfb01ea31e6cd94cb5a152abd6bbfcd, type: 3}
+  m_Script: {fileID: 11500000, guid: cc71919bcd8d88e4da80755b1446b246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityStats: {fileID: 11400000, guid: 74f9a0b0a8860914e9622b3202d33cc2, type: 2}
+  baseStats: {fileID: 11400000, guid: 74f9a0b0a8860914e9622b3202d33cc2, type: 2}
   HP: 100
+--- !u!114 &7394367513635779418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7261159090481387345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7811afaee72ced8468f08be1e1e39160, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   RedFillingSpeed: 0.4
   RedDecreaseSpeed: 0.18
   YellowDecreaseSpeed: 1

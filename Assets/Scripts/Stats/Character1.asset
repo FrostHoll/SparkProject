@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cd1f6233adac67488a121b929c898e5, type: 3}
   m_Name: Character1
   m_EditorClassIdentifier: 
-  HP: 100
+  maxHP: 0
   armor: 50
   speed: 10
   damage: 0
