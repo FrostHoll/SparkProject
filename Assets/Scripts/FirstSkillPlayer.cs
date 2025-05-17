@@ -33,6 +33,7 @@ public class FirstSkillPlayer : MonoBehaviour
     {
         if (Input.GetKeyDown(abilityKey) && !isOnCooldown)
         {
+            isOnCooldown = true;
             StartCoroutine(UseAbility());
         }
     }
@@ -62,15 +63,10 @@ public class FirstSkillPlayer : MonoBehaviour
         if (playerControlls != null)
             playerControlls.enabled = true;
 
-        StartCoroutine(StartCooldown());
-    }
-
-    private IEnumerator StartCooldown()
-    {
-        isOnCooldown = true;
-        yield return new WaitForSeconds(skillCooldown);
+        yield return new WaitForSeconds(skillCooldown - playerDisable - castTime);
         isOnCooldown = false;
     }
+
 }
 
 interface IBuffable
