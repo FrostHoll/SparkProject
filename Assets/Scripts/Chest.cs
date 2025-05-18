@@ -1,16 +1,10 @@
 using UnityEngine;
-using UnityEngine.Events;
 
-public class Chest : MonoBehaviour, IInteractable
+public class Chest : ItemDropper, IInteractable // Теперь тут совсем пусто
 {
-    [SerializeField] private DropItems _dropItems;
-    [SerializeField] private UnityEvent<GameObject> OnOpen;
-    [SerializeField] private Animator animator;
-    private Looting _looting = new Looting();
-
-    public void Interact()
+    public void Interact(GameObject Player)
     {
-        animator.SetBool("Openning", true);
-        OnOpen.Invoke(_looting.GiveMeFromItems(_dropItems.ListItems));
+        if (AlreadeyDropped) return;
+        StartCoroutine(DropItem());
     }
 }

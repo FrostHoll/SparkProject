@@ -2,15 +2,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
-public class Interaction : MonoBehaviour, IInteraction
+public class Interaction : MonoBehaviour
 {
     private InputSystem_Actions inputActions;
+    private GameObject nearestItem;
+    private float minDistance = float.MaxValue;
 
-    [SerializeField] private bool interacting = false;
-    private List<GameObject> listOfItemsInInteractionZone = new List<GameObject>();
-
-    public bool Interacting { get { return interacting; } set { interacting = value; } }
-    public List<GameObject> ListOfItemsInInteractionZone { get { return listOfItemsInInteractionZone; } set { listOfItemsInInteractionZone = value; } }
     private void Awake()
     {
         inputActions = new InputSystem_Actions();
@@ -27,42 +24,33 @@ public class Interaction : MonoBehaviour, IInteraction
 
     private void InteractePerformed(InputAction.CallbackContext obj)
     {
-        if (listOfItemsInInteractionZone.Count > 0)
-        { 
-            float minDistance = float.MaxValue;
-            GameObject nearestItem = null;
-            Vector3 playerPosition = transform.position;
-
-            foreach (var item in listOfItemsInInteractionZone)
-            {
-                float distance = Vector3.Distance(playerPosition, item.transform.position);
-                if (distance < minDistance)
-                {
-                    nearestItem = item;
-                    minDistance = distance;
-                }
-            }  
-            
-
+        if (nearestItem != null)
+        {
             IInteractable interactable = nearestItem.GetComponent<IInteractable>();
-            interactable.Interact();
+            interactable.Interact(gameObject);
         }
+        
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        ListOfItemsInInteractionZone.Add(other.gameObject);
-
-    }
     private void OnTriggerExit(Collider other)
     {
-        ListOfItemsInInteractionZone.Remove(other.gameObject);
+        if (nearestItem == other.gameObject)
+        {
+            nearestItem = null;
+            minDistance = float.MaxValue;
+        }
+    }
+    
+    private void OnTriggerStay(Collider other) 
+    {
+        if (other.gameObject.TryGetComponent<IInteractable>(out var interactable)) 
+        {
+            var distance = Vector3.Distance(transform.position, other.gameObject.transform.position);
+            if (distance < minDistance)
+            {
+                nearestItem = other.gameObject;
+                minDistance = distance;
+            }
+        }
     }
 }
-
-interface IInteraction
-{
-    bool Interacting { get; set; }
-    List<GameObject> ListOfItemsInInteractionZone { get; set; }
-}
-
