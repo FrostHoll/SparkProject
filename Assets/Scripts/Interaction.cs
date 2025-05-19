@@ -1,12 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using UnityEngine.InputSystem.LowLevel;
 
 public class Interaction : MonoBehaviour
 {
     private InputSystem_Actions inputActions;
     private GameObject nearestItem;
-    private float minDistance = float.MaxValue;
+    private IInteractable nearestItemInterface; // < - пришлось его сделать, изначально хотел вместо GameObject только IInterctable оставить,
+    private float minDistance = float.MaxValue; //  но для проверки OnTriggerExit тогда бы пришлось вызывать TryGetComponent, что ещё хуже чем было, так что теперь 2 поля.
+
+    private IWhoIsUser nearestItemUser;
 
     private void Awake()
     {
@@ -26,8 +30,11 @@ public class Interaction : MonoBehaviour
     {
         if (nearestItem != null)
         {
-            IInteractable interactable = nearestItem.GetComponent<IInteractable>();
-            interactable.Interact(gameObject);
+            nearestItemInterface.Interact();
+        }
+        if (nearestItemUser != null)
+        {
+            nearestItemUser.Player = gameObject;
         }
         
     }
@@ -37,6 +44,8 @@ public class Interaction : MonoBehaviour
         if (nearestItem == other.gameObject)
         {
             nearestItem = null;
+            nearestItemInterface = null;
+            nearestItemUser = null;
             minDistance = float.MaxValue;
         }
     }
@@ -49,7 +58,17 @@ public class Interaction : MonoBehaviour
             if (distance < minDistance)
             {
                 nearestItem = other.gameObject;
+                nearestItemInterface = interactable;
                 minDistance = distance;
+
+                if (other.gameObject.TryGetComponent<IWhoIsUser>(out var whoIsUser))
+                {
+                    nearestItemUser = whoIsUser;
+                }
+                else
+                {
+                    nearestItemUser = null;
+                }
             }
         }
     }

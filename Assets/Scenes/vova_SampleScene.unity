@@ -1723,17 +1723,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1288329581}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1024c148c8ee83c4582ad06abd9ca87b, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e37f979a493e3f43b7a6483f7d8295b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dropItems: {fileID: 0}
+  _dropItems: {fileID: 11400000, guid: 2d322befad62cbe459652df547da184f, type: 2}
   TimeToDrop: 0.5
-  EventToDrop:
-    m_PersistentCalls:
-      m_Calls: []
   AlreadeyDropped: 0
   pushForce: 10
-  animator: {fileID: 0}
 --- !u!1 &1293476406
 GameObject:
   m_ObjectHideFlags: 0

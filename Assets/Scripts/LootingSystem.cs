@@ -1,22 +1,18 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.Events;
 using System.Collections.Generic;
 
-public abstract class ItemDropper : MonoBehaviour // кста, точно не знаю, но virtual я понатыкал для возможности его редактирования в детях.
+public class LootingSystem : MonoBehaviour // кста, точно не знаю, но virtual я понатыкал для возможности его редактирования в детях.
 {
     [SerializeField] protected DropItems _dropItems;
     [SerializeField] protected float TimeToDrop = 0.5f;
-    [SerializeField] protected UnityEvent<GameObject> EventToDrop;
     [SerializeField] protected bool AlreadeyDropped = false;
     [SerializeField] protected float pushForce = 10f;
-    [SerializeField] protected Animator animator;
 
-    public virtual IEnumerator DropItem()
+    public virtual IEnumerator DropItem() // Олег думает, что я читал его статью. На самом деле я просто взял код из его кликера для своего хо-хо хи-хи ха-ха
     {
-        animator.SetBool("Openning", true);
         yield return new WaitForSeconds(TimeToDrop);
-        EventToDrop.Invoke(GiveMeFromItems(_dropItems.ListItems)); // А в целом, нужно ли так тогда это событие?
+        GiveMeFromItems(_dropItems.ListItems);
         AlreadeyDropped = true;
     }
     public virtual void JumpItem(GameObject gameObject)
