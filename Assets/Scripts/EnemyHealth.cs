@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyHealth : Health
+public class EnemyHealth : Health 
 {
     [SerializeField] private GameObject enemyCanvas;
 
@@ -13,6 +13,6 @@ public class EnemyHealth : Health
     public override void ApplyHealing(float amount)
     {
         base.ApplyHealing(amount);
-        if (HP >= MaxHP) enemyCanvas.SetActive(false);
+        if (HP >= entityStats.MaxHP) enemyCanvas.SetActive(false);
     }
 }
