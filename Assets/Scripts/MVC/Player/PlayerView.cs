@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class PlayerView : MonoBehaviour
+public class PlayerView : View
 {
     
-
 }

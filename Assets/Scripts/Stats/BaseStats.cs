@@ -10,7 +10,6 @@ public interface IAttackStats
 public interface IHealthStats
 {
     float MaxHP { get; set; }
-    float HP { get; set; }
     float Armor {  get; set; }
 }
 
@@ -18,7 +17,6 @@ public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IA
 {
     [Header("Health")]
     [SerializeField] private float maxHP;
-    [SerializeField] private float hp;
     [SerializeField] private float armor;
     [Header("Movement")]
     [SerializeField] private float speed;
@@ -31,11 +29,6 @@ public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IA
     {
         get { return maxHP; }
         set { maxHP = value; }
-    }
-    public float HP
-    {
-        get { return hp; }
-        set { hp = value; }
     }
     public float Armor
     {

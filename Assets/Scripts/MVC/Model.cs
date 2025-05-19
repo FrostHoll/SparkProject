@@ -1,38 +1,40 @@
+using System;
 
 public abstract class Model
 {
-    private IHealthBar view;
     private IHealthStats healthStats;
+    public float HP;
+    public event Action<float, float> HealthChanged;
 
-    public Model(IHealthStats ihealthStats, IHealthBar view)
+    public Model(IHealthStats healthStatsInterfac)
     {
-        this.view = view;
-        healthStats = ihealthStats;
+        healthStats = healthStatsInterfac;
+        HP = healthStats.MaxHP;
     }
 
     public virtual void TakeDamage(float damage)
     {
-        if (healthStats.HP - (damage * (100 / (100 + healthStats.Armor))) <= 0)
+        if (HP - (damage * (100 / (100 + healthStats.Armor))) <= 0)
         {
-            healthStats.HP = 0;
+            HP = 0;
         }
         else
         {
-            healthStats.HP -= damage * (100 / (100 + healthStats.Armor));
+            HP -= damage * (100 / (100 + healthStats.Armor));
         }
-        view.UpdateHealthBar(healthStats.HP, healthStats.MaxHP);
+        HealthChanged?.Invoke(HP, healthStats.MaxHP);
     }
 
     public void ApplyHealing(float amount)
     {
-        if (healthStats.HP + amount >= healthStats.MaxHP)
+        if (HP + amount >= healthStats.MaxHP)
         {
-            healthStats.HP = healthStats.MaxHP;
+            HP = healthStats.MaxHP;
         }
         else
         {
-            healthStats.HP += amount;
+            HP += amount;
         }
-        view.UpdateHealthBar(healthStats.HP, healthStats.MaxHP);
+        HealthChanged?.Invoke(HP, healthStats.MaxHP);
     }
 }

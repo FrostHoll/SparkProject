@@ -14,8 +14,6 @@ GameObject:
   - component: {fileID: 1176276737450656073}
   - component: {fileID: 4426471331188465238}
   - component: {fileID: 2372995184454977745}
-  - component: {fileID: 1817535839615384611}
-  - component: {fileID: 2945118240085711521}
   m_Layer: 6
   m_Name: enemyWizard
   m_TagString: Untagged
@@ -157,39 +155,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 12
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1817535839615384611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 67157182439231719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7811afaee72ced8468f08be1e1e39160, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RedFillingSpeed: 0.4
-  RedDecreaseSpeed: 0.18
-  YellowDecreaseSpeed: 1
-  redHP: {fileID: 8397984040770922514}
-  yellowHP: {fileID: 4099610558032549304}
-  greenHP: {fileID: 1318860125066646695}
-  enemyCanvas: {fileID: 9077133935973996095}
---- !u!114 &2945118240085711521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 67157182439231719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc71919bcd8d88e4da80755b1446b246, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseStats: {fileID: 11400000, guid: 74f9a0b0a8860914e9622b3202d33cc2, type: 2}
-  HP: 100
 --- !u!1 &2729985801587337515
 GameObject:
   m_ObjectHideFlags: 0

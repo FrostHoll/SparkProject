@@ -441,10 +441,11 @@ GameObject:
   - component: {fileID: 325047804}
   - component: {fileID: 325047809}
   - component: {fileID: 325047808}
-  - component: {fileID: 325047807}
   - component: {fileID: 325047806}
   - component: {fileID: 325047805}
   - component: {fileID: 325047810}
+  - component: {fileID: 325047813}
+  - component: {fileID: 325047812}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -507,26 +508,6 @@ MonoBehaviour:
   surfaceLayer:
     serializedVersion: 2
     m_Bits: 8
---- !u!114 &325047807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 325047803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc71919bcd8d88e4da80755b1446b246, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  entityStats: {fileID: 11400000, guid: c362fd68d9e890a49b6bac41c95f4a89, type: 2}
-  HP: 100
-  RedFillingSpeed: 0.4
-  RedDecreaseSpeed: 0.18
-  YellowDecreaseSpeed: 1
-  redHP: {fileID: 1298203298}
-  yellowHP: {fileID: 810334802}
-  greenHP: {fileID: 2095227237}
 --- !u!114 &325047808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -539,56 +520,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23c6b27ef243fef429b1ba7cfa6fbf96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerControls:
-    m_Name: Player Controls
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 1dccb99e-4fbe-4386-8a98-dfa4dcfa76d0
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: WASD
-      m_Id: 21e28635-0eae-46ac-ac96-1315e8cd9768
-      m_Path: 2DVector
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Player Controls
-      m_Flags: 4
-    - m_Name: up
-      m_Id: 8e17fd0d-f178-4eea-b4e6-a82233c14ece
-      m_Path: <Keyboard>/w
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Player Controls
-      m_Flags: 8
-    - m_Name: down
-      m_Id: af4f2521-c402-48b1-9818-a74b4140d86a
-      m_Path: <Keyboard>/s
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Player Controls
-      m_Flags: 8
-    - m_Name: left
-      m_Id: 7dae204b-f562-46fe-86a6-df95def8b0d6
-      m_Path: <Keyboard>/a
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Player Controls
-      m_Flags: 8
-    - m_Name: right
-      m_Id: 44c7052e-d94b-4a20-bcf2-16430855ed04
-      m_Path: <Keyboard>/d
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Player Controls
-      m_Flags: 8
-    m_Flags: 0
-  characterStats: {fileID: 11400000, guid: c362fd68d9e890a49b6bac41c95f4a89, type: 2}
 --- !u!54 &325047809
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -630,7 +561,88 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TeckTimer: 0
   DASH: 0
-  characterStats: {fileID: 11400000, guid: c362fd68d9e890a49b6bac41c95f4a89, type: 2}
+  characterStats: {fileID: 11400000, guid: eab4ed9c9403424448c30b217dfb75f4, type: 2}
+--- !u!114 &325047812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325047803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9c4912c7e7c4c149be2fc8b72b8b4b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  RedFillingSpeed: 0.4
+  RedDecreaseSpeed: 0.18
+  YellowDecreaseSpeed: 1
+  redHP: {fileID: 1298203298}
+  yellowHP: {fileID: 810334802}
+  greenHP: {fileID: 2095227237}
+--- !u!114 &325047813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325047803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ece090328156d844c94d6f314af22887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseStats: {fileID: 11400000, guid: eab4ed9c9403424448c30b217dfb75f4, type: 2}
+  playerControls:
+    m_Name: Player Controls
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 84cbd59f-04fd-43b8-850f-d142ea65b0f1
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: WASD
+      m_Id: 3ae42a4f-8208-460b-bacb-f1785123aafb
+      m_Path: 2DVector
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Controls
+      m_Flags: 4
+    - m_Name: up
+      m_Id: e4920c55-c175-4727-bec6-1624684e4f60
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Controls
+      m_Flags: 8
+    - m_Name: down
+      m_Id: bc6c9592-5369-4c02-b11e-2cf8a7c96368
+      m_Path: <Keyboard>/s
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Controls
+      m_Flags: 8
+    - m_Name: left
+      m_Id: 638db253-c594-4f83-b932-e64560078eb9
+      m_Path: <Keyboard>/a
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Controls
+      m_Flags: 8
+    - m_Name: right
+      m_Id: de976a55-9e8c-45d6-9079-e7a88bb5b2b3
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Controls
+      m_Flags: 8
+    m_Flags: 0
 --- !u!1 &406135031
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,6 +1514,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3708129305870318716, guid: ba6184c965c01a54b917ae2b9e384bad, type: 3}
+      propertyPath: baseStats
+      value: 
+      objectReference: {fileID: 11400000, guid: 74f9a0b0a8860914e9622b3202d33cc2, type: 2}
     - target: {fileID: 5984045730258968141, guid: ba6184c965c01a54b917ae2b9e384bad, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8.65

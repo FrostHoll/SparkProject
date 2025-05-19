@@ -1,8 +1,5 @@
 using System.Collections;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class FirstSkillPlayer : MonoBehaviour
 {
@@ -48,7 +45,7 @@ public class FirstSkillPlayer : MonoBehaviour
             Collider[] colliders = Physics.OverlapSphere(hitInfo.point, explosionRadius, surfaceLayer);
             foreach (Collider hit1 in colliders)
             {
-                Health health = hit1.GetComponent<Health>(); 
+                Controller health = hit1.GetComponent<Controller>(); 
                 if (health != null)
                 {
                     health.TakeDamage(skillDamage);

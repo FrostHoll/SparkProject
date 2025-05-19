@@ -4,23 +4,19 @@ using UnityEngine.InputSystem;
 public class PlayerController : Controller
 {
     public InputAction playerControls;
-    public PlayerView playerView;
-    private Rigidbody rb;
+    private PlayerMovement playerMovement;
 
     private void Start()
     {
         playerControls.Enable();
-        rb = GetComponent<Rigidbody>();
+        playerMovement = GetComponent<PlayerMovement>();
+        model = new PlayerModel(baseStats);
+        model.HealthChanged += view.OnHealthChanged;
     }
 
     private void Update()
     {
-        var inputs = playerControls.ReadValue<Vector2>().normalized;
-
-        if (inputs != Vector2.zero)
-        {
-            rb.linearVelocity = new Vector3(inputs.x, 0f, inputs.y) * baseStats.Speed;
-        }
+        playerMovement.Move(playerControls,baseStats.Speed);
 
         if (Input.GetKeyUp(KeyCode.E)) //для проверки
         {
@@ -30,7 +26,5 @@ public class PlayerController : Controller
         {
             TakeDamage(10f);
         }
-
-        healthBar.HealthBarRenderer(baseStats.HP,baseStats.MaxHP);
     }
 }

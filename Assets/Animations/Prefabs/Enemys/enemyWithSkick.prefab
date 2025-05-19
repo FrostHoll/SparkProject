@@ -640,12 +640,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5984045730258968141}
   - component: {fileID: 4993372806827755195}
-  - component: {fileID: 7834055413759348190}
-  - component: {fileID: 7394367513635779418}
   - component: {fileID: 651489480518349887}
   - component: {fileID: 6638769064725229132}
   - component: {fileID: 3885074002849617526}
   - component: {fileID: 7543036759825535584}
+  - component: {fileID: 3708129305870318716}
+  - component: {fileID: 7412359052227564407}
   m_Layer: 6
   m_Name: enemyWithSkick
   m_TagString: Untagged
@@ -691,39 +691,6 @@ MonoBehaviour:
   animator: {fileID: 0}
   attackRange: 2.5
   enemyMeleeAttack: {fileID: 1044018117447599383}
---- !u!114 &7834055413759348190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7261159090481387345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc71919bcd8d88e4da80755b1446b246, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseStats: {fileID: 11400000, guid: 74f9a0b0a8860914e9622b3202d33cc2, type: 2}
-  HP: 100
---- !u!114 &7394367513635779418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7261159090481387345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7811afaee72ced8468f08be1e1e39160, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RedFillingSpeed: 0.4
-  RedDecreaseSpeed: 0.18
-  YellowDecreaseSpeed: 1
-  redHP: {fileID: 2458627853482786270}
-  yellowHP: {fileID: 4548341093435951025}
-  greenHP: {fileID: 363454309273431937}
-  enemyCanvas: {fileID: 353422300076288569}
 --- !u!54 &651489480518349887
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -816,6 +783,39 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 8
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3708129305870318716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7261159090481387345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d6c2c5f9c02b284d8ed36c41a8fb5d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseStats: {fileID: 0}
+--- !u!114 &7412359052227564407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7261159090481387345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d8130b24ffd47b45a8192d3d724e5c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  RedFillingSpeed: 0.4
+  RedDecreaseSpeed: 0.18
+  YellowDecreaseSpeed: 1
+  redHP: {fileID: 2458627853482786270}
+  yellowHP: {fileID: 4548341093435951025}
+  greenHP: {fileID: 363454309273431937}
+  enemyCanvas: {fileID: 353422300076288569}
 --- !u!1 &8011386201254328053
 GameObject:
   m_ObjectHideFlags: 0

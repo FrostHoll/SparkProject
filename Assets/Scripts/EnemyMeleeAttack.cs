@@ -15,7 +15,7 @@ public class EnemyMeleeAttack : MonoBehaviour
             
             if (Physics.Raycast(transform.position,-transform.up, out hit,enemyStats.AttackRange , layerMask))
             {
-                if (hit.transform.TryGetComponent(out Health health))
+                if (hit.transform.TryGetComponent(out Controller health))
                 {
                     health.TakeDamage(enemyStats.Damage);
                     isAttacking = false;

@@ -2,23 +2,24 @@ using UnityEngine;
 
 public abstract class Controller : MonoBehaviour 
 {
-    public Model model;
-    public HealthBar healthBar;
-    public BaseStats baseStats;
-    public IHealthBar ihealthBar;
+    protected Model model;
+    protected View view;
+    [SerializeField] protected BaseStats baseStats;
 
     private void Awake()
     {
-        model = new PlayerModel(baseStats, healthBar);
+        view = GetComponent<View>();
     }
 
     public void ApplyHealing(float amount)
     {
         model.ApplyHealing(amount);
+        view.UpdateHealthBar(model.HP,baseStats.MaxHP);
     }
 
     public void TakeDamage(float damage)
     {
         model.TakeDamage(damage);
+        view.UpdateHealthBar(model.HP, baseStats.MaxHP);
     }
 }
