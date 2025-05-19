@@ -29,22 +29,7 @@ public abstract class BaseEnemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            isAngry = true;
-            player = other.transform;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            isAngry = false;
-        }
-    }
+    
 
     public void LookAtTarget(Transform target) //поворачивает в сторону таргета
     {

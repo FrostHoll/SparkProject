@@ -11,7 +11,6 @@ public interface IHealthStats
 {
     float MaxHP { get; set; }
     float Armor {  get; set; }
-
 }
 
 public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IAttackStats 
