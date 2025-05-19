@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyModel : Model
 {
-    public EnemyModel(IHealthStats baseStats) : base(baseStats)
+    public EnemyModel(BaseStats baseStats) : base(baseStats)
     {
 
     }

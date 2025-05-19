@@ -16,7 +16,7 @@ public class PlayerController : Controller
 
     private void Update()
     {
-        playerMovement.Move(playerControls,baseStats.Speed);
+        playerMovement.Move(playerControls,model.stats.Speed);
 
         if (Input.GetKeyUp(KeyCode.E)) //для проверки
         {

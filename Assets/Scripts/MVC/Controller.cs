@@ -14,12 +14,12 @@ public abstract class Controller : MonoBehaviour
     public void ApplyHealing(float amount)
     {
         model.ApplyHealing(amount);
-        view.UpdateHealthBar(model.HP,baseStats.MaxHP);
+        view.UpdateHealthBar(model.HP,model.stats.MaxHP);
     }
 
     public void TakeDamage(float damage)
     {
         model.TakeDamage(damage);
-        view.UpdateHealthBar(model.HP, baseStats.MaxHP);
+        view.UpdateHealthBar(model.HP,model.stats.MaxHP);
     }
 }

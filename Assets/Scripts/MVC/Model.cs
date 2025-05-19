@@ -2,39 +2,39 @@ using System;
 
 public abstract class Model
 {
-    private IHealthStats healthStats;
+    public BaseStats stats;
     public float HP;
     public event Action<float, float> HealthChanged;
 
-    public Model(IHealthStats healthStatsInterfac)
+    public Model(BaseStats baseStats)
     {
-        healthStats = healthStatsInterfac;
-        HP = healthStats.MaxHP;
+        stats = baseStats;
+        HP = stats.MaxHP;
     }
 
     public virtual void TakeDamage(float damage)
     {
-        if (HP - (damage * (100 / (100 + healthStats.Armor))) <= 0)
+        if (HP - (damage * (100 / (100 + stats.Armor))) <= 0)
         {
             HP = 0;
         }
         else
         {
-            HP -= damage * (100 / (100 + healthStats.Armor));
+            HP -= damage * (100 / (100 + stats.Armor));
         }
-        HealthChanged?.Invoke(HP, healthStats.MaxHP);
+        HealthChanged?.Invoke(HP, stats.MaxHP);
     }
 
     public void ApplyHealing(float amount)
     {
-        if (HP + amount >= healthStats.MaxHP)
+        if (HP + amount >= stats.MaxHP)
         {
-            HP = healthStats.MaxHP;
+            HP = stats.MaxHP;
         }
         else
         {
             HP += amount;
         }
-        HealthChanged?.Invoke(HP, healthStats.MaxHP);
+        HealthChanged?.Invoke(HP, stats.MaxHP);
     }
 }
