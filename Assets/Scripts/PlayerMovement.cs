@@ -1,21 +1,21 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public interface IMoveSpeed
+{
+    float Speed { get; set; }
+}
+
 public class PlayerMovement : MonoBehaviour
 {
-    public InputAction playerControls;
-
-    public float speed = 5f;
-
     private Rigidbody rb;
 
     private void Start()
     {
-        playerControls.Enable();
         rb = GetComponent<Rigidbody>();
     }
 
-    private void Update()
+    public void Move(InputAction playerControls,float speed)
     {
         var inputs = playerControls.ReadValue<Vector2>().normalized;
 

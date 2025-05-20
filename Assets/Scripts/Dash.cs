@@ -1,39 +1,73 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Dash : MonoBehaviour
+public interface IDash
 {
-    public InputAction playerControls;
+    float TimeOfDash { get; set; }
+    float DashIncreaseSpeed { get; set; }
+}
+
+class Dash : MonoBehaviour
+{
+    private InputSystem_Actions inputActions;
+
     private Rigidbody rb;
-    public float TimeOfDash = 1f;
-    public float TeckTimer = 0f;
-    // public float DashIncreaseSpeed = 5f;  Я хотел добавить х увеличение скорости, но не решился редактировать PlayerMovement, чтобы создать метод возврата скорости(
-    public float PlayerDashSpeed = 15f;
+    private PlayerMovement ms;
+    private PlayerLookAtMouse plams;
+
+    public float TeckTimer;
+
     public bool DASH = false;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    [SerializeField] private CharacterStats characterStats;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        ms = GetComponent<PlayerMovement>();
+        plams = GetComponent<PlayerLookAtMouse>();
     }
 
-    // Update is called once per frame
+    private void Awake()
+    {
+        inputActions = new InputSystem_Actions();
+        inputActions.Enable();
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Player.Dash.performed += DashPerformed;
+    }
+    private void OnDisable()
+    {
+        inputActions.Player.Dash.performed -= DashPerformed;
+    }
+
+    private void DashPerformed(InputAction.CallbackContext obj)
+    {
+        if (!DASH)
+        {
+            DASH = true;
+            TeckTimer = characterStats.TimeOfDash;
+            ms.enabled = false;
+            plams.enabled = false;
+        }
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            if (!DASH) {
-                DASH = true;
-                TeckTimer = TimeOfDash;
-            }
-        }
         if (DASH == true)
         {
             TeckTimer -= Time.deltaTime;
-            rb.linearVelocity = transform.forward * PlayerDashSpeed;
+            rb.linearVelocity = transform.forward * characterStats.DashIncreaseSpeed * characterStats.Speed;
         }
         if (TeckTimer <= 0)
         {
             DASH = false;
+            ms.enabled = true;
+            plams.enabled = true;
         }
     }
 }
+
+
