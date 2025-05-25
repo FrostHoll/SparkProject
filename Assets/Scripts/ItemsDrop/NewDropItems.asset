@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652164a2af1959c4fa860db60e11ccba, type: 3}
   m_Name: NewDropItems
   m_EditorClassIdentifier: 
-  _listName: Name1
-  _listItems:
-  - gameObject: {fileID: 2532861376861596234, guid: ac954a0511afddb4cbf2580110a46308, type: 3}
-    weight: 30
-  - gameObject: {fileID: 2532861376861596234, guid: ea4d3ae9e2ff8fc4493b076d5e328556, type: 3}
-    weight: 20
-  - gameObject: {fileID: 2532861376861596234, guid: 3131196a861e2c54b8f3aad4d2e5d241, type: 3}
-    weight: 10
+  Items:
+  - GameObject: {fileID: 2532861376861596234, guid: ac954a0511afddb4cbf2580110a46308, type: 3}
+    Weight: 30
+  - GameObject: {fileID: 2532861376861596234, guid: ea4d3ae9e2ff8fc4493b076d5e328556, type: 3}
+    Weight: 20
+  - GameObject: {fileID: 2532861376861596234, guid: 3131196a861e2c54b8f3aad4d2e5d241, type: 3}
+    Weight: 10
