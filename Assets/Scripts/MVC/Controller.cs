@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using UnityEngine;
 
 public abstract class Controller : MonoBehaviour 
@@ -21,5 +22,10 @@ public abstract class Controller : MonoBehaviour
     {
         model.TakeDamage(damage);
         view.UpdateHealthBar(model.HP,model.stats.MaxHP);
+    }
+
+    public void ApplyAmp(StatType type, float value)
+    {
+        model.ApplyAmp(type, value);
     }
 }

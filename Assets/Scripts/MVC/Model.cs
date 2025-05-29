@@ -5,6 +5,7 @@ public abstract class Model
     public BaseStats stats;
     public float HP;
     public event Action<float, float> HealthChanged;
+    public AmplifiersWrapper Amp;
 
     public Model(BaseStats baseStats)
     {
@@ -36,5 +37,29 @@ public abstract class Model
             HP += amount;
         }
         HealthChanged?.Invoke(HP, stats.MaxHP);
+    }
+
+    public float ApplyAmp(StatType type, float value)
+    {
+        float additiveSum = 0f;
+        float multiplicativeSum = 1f;
+
+        if (Amp.addAmps.TryGetValue(type, out var addAmps))
+        {
+            foreach (var amp in addAmps)
+            {
+                additiveSum += amp;
+            }
+        }
+
+        if (Amp.multAmps.TryGetValue(type, out var multAmps))
+        {
+            foreach (var amp in multAmps)
+            {
+                multiplicativeSum += amp;
+            }
+        }
+
+        return (value + additiveSum) * multiplicativeSum;
     }
 }
