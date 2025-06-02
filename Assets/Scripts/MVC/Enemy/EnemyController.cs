@@ -2,15 +2,25 @@ using UnityEngine;
 
 public class EnemyController : Controller
 {
-    [SerializeField] private BaseEnemy baseEnemy;
+    private BaseEnemy baseEnemy;
+    private EnemyMovement enemyMovement;
+
+    private Transform player;
+    public bool isAngry = false;
     private void Start()
     {
+        baseEnemy = GetComponent<BaseEnemy>();
+        enemyMovement = GetComponent<EnemyMovement>();
         model = new EnemyModel(baseStats);
         model.HealthChanged += view.OnHealthChanged;
-        baseEnemy = GetComponent<BaseEnemy>();
     }
     private void Update()
     {
+        if (isAngry)
+        {
+            baseEnemy.EnemyAI(enemyMovement,player,view,model, weapon);
+        }
+
         if (Input.GetKeyUp(KeyCode.E)) //для проверки
         {
             ApplyHealing(10f);
@@ -19,22 +29,30 @@ public class EnemyController : Controller
         {
             TakeDamage(10f);
         }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        if (model.HP <= 0)
         {
-            baseEnemy.isAngry = true;
-            baseEnemy.player = other.transform;
+            Die();
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    public void EnemyBlink() //используеться в анимации
     {
-        if (other.CompareTag("Player"))
-        {
-            baseEnemy.isAngry = false;
-        }
+        enemyMovement.Blink(player);
+    }
+
+    public void EnemyStartAttack()
+    {
+        weapon.StartOrStopAttack(true);
+    }
+
+    public void EnemyStopAttack()
+    {
+        weapon.StartOrStopAttack(false);
+    }
+
+    public void AgrUbdate(Transform _player, bool _isAngry) 
+    {
+        player = _player;
+        isAngry = _isAngry;
     }
 }

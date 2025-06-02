@@ -2,51 +2,21 @@ using UnityEngine;
 
 public class EnemyWithStick : BaseEnemy
 {
-    public float attackRange = 2;
-    [SerializeField] private EnemyMeleeAttack enemyMeleeAttack;
-
-    private void Update()
+    public override void EnemyAI(EnemyMovement enemyMovement, Transform player, View view, Model model, BaseWeapon weapon = null)
     {
-        if (isAngry)
+        enemyMovement.MoveEnemy(player, model.stats.Speed);
+        enemyMovement.LookAtTarget(player);
+        if (Vector3.Distance(player.position, transform.position) <= model.stats.AttackRange)
         {
-            MoveEnemy(player);
-            LookAtTarget(player);
-            if (Vector3.Distance(player.position,transform.position) <= attackRange)
-            {
-                Attack();
-                agent.isStopped = true;
-            }
-            else
-            {
-                agent.isStopped = false;
-                animator.SetBool("IsAttacking", false);
-            }
+            weapon.StartOrStopAttack(true);
+            view.ChangeAttackAnim(true);
+            enemyMovement.agent.isStopped = true;
         }
-    }
-
-    public override void Attack()
-    {
-        animator.SetBool("IsAttacking", true);
-    }
-
-    public override void MoveEnemy(Transform target)
-    {
-        agent.SetDestination(target.position);
-    }
-
-    private void OnDrawGizmos() // просто показывает облость рейкаста
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position,attackRange);
-    }
-
-    public void AttackOn() //сробатывает в начале анимации
-    {
-        enemyMeleeAttack.isAttacking = true;
-    }
-
-    public void AttackOff() //сробатывает в конце анимации
-    {
-        enemyMeleeAttack.isAttacking = false;
+        else
+        {
+            weapon.StartOrStopAttack(false);
+            view.ChangeAttackAnim(false);
+            enemyMovement.agent.isStopped = false;
+        }
     }
 }

@@ -10,7 +10,7 @@ public static class RandomTransformGenerator
             Vector3 randomPosition2D = randomDirection * Random.Range(minRadius, maxRadius);
             Vector3 randomPosition = objectTransform.position + new Vector3(randomPosition2D.x, heightOffset, randomPosition2D.y);
 
-            
+
             if (!IsPositionBlocked(randomPosition)) 
             {
                 return randomPosition;

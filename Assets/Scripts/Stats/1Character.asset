@@ -19,4 +19,4 @@ MonoBehaviour:
   attackRange: 0
   attackSpeed: 0
   timeOfDash: 0.5
-  dashIncreaseSpeed: 20
+  dashIncreaseSpeed: 3

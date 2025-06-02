@@ -3,20 +3,40 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : Controller
 {
-    public InputAction playerControls;
     private PlayerMovement playerMovement;
+    public GameObject weeeopen;
+    public InputSystem_Actions inputActions;
 
     private void Start()
     {
-        playerControls.Enable();
         playerMovement = GetComponent<PlayerMovement>();
         model = new PlayerModel(baseStats);
         model.HealthChanged += view.OnHealthChanged;
     }
 
-    private void Update()
+    private void Awake()
     {
-        playerMovement.Move(playerControls,model.stats.Speed);
+        inputActions = new InputSystem_Actions();
+        inputActions.Enable();
+        view = GetComponent<View>();
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Player.Attack.performed += StartAttack;
+        inputActions.Player.Attack.canceled += StopAttack;
+    }
+    private void OnDisable()
+    {
+        inputActions.Player.Attack.performed -= StartAttack;
+        inputActions.Player.Attack.canceled -= StopAttack;
+    }
+
+
+
+    private void Update()  
+    {
+        playerMovement.Move(inputActions.Player.Move,model.stats.Speed);
 
         if (Input.GetKeyUp(KeyCode.E)) //для проверки
         {
@@ -25,6 +45,31 @@ public class PlayerController : Controller
         if (Input.GetKeyUp(KeyCode.R))
         {
             TakeDamage(10f);
+        }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            AddWeapor(weeeopen);
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            RemoveWeapon();
+        }
+    }
+    public void StartAttack(InputAction.CallbackContext obj)
+    {
+        if (weapon != null)
+        {
+            weapon.StartOrStopAttack(true);
+            view.ChangeAttackAnim(true);
+        }
+    }
+
+    public void StopAttack(InputAction.CallbackContext obj)
+    {
+        if (weapon != null)
+        {
+            weapon.StartOrStopAttack(false);
+            view.ChangeAttackAnim(false);
         }
     }
 }
