@@ -20,10 +20,10 @@ public class EnemyMovement : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, targetEnemyRotation, Time.deltaTime * rotationSpeed);
     }
 
-    public void MoveEnemy(Transform target, float speed)
+    public void MoveEnemy(Vector3 target, float speed)
     {
         agent.speed = speed; 
-        agent.SetDestination(target.position);
+        agent.SetDestination(target);
     }
 
     public void Blink(Transform player)

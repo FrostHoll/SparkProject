@@ -7,11 +7,15 @@ public class PlayerController : Controller
     public GameObject weeeopen;
     public InputSystem_Actions inputActions;
 
-    private void Start()
+    protected override void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
         model = new PlayerModel(baseStats);
         model.HealthChanged += view.OnHealthChanged;
+        base.Start();
+        model.stats.IgnoreMask = LayerMask.GetMask("Player", "Weapon", "ignoreMask");
+        model.stats.LayerMask = LayerMask.GetMask("Enemy");
+        weapon.attackMask = model.stats; //временно
     }
 
     private void Awake()
@@ -34,8 +38,10 @@ public class PlayerController : Controller
 
 
 
-    private void Update()  
+    protected override void Update()  
     {
+        base.Update();
+
         playerMovement.Move(inputActions.Player.Move,model.stats.Speed);
 
         if (Input.GetKeyUp(KeyCode.E)) //для проверки
@@ -60,7 +66,7 @@ public class PlayerController : Controller
         if (weapon != null)
         {
             weapon.StartOrStopAttack(true);
-            view.ChangeAttackAnim(true);
+            view.StartAttackAnim();
         }
     }
 
@@ -69,7 +75,12 @@ public class PlayerController : Controller
         if (weapon != null)
         {
             weapon.StartOrStopAttack(false);
-            view.ChangeAttackAnim(false);
+            view.StopAttackAnim();
         }
+    }
+
+    public override void Die()
+    {
+        
     }
 }

@@ -4,22 +4,27 @@ public class EnemyController : Controller
 {
     private BaseEnemy baseEnemy;
     private EnemyMovement enemyMovement;
+    private EnemyState enemyState;
 
-    private Transform player;
+    public Transform player;
     public bool isAngry = false;
-    private void Start()
+    protected override void Start()
     {
         baseEnemy = GetComponent<BaseEnemy>();
         enemyMovement = GetComponent<EnemyMovement>();
         model = new EnemyModel(baseStats);
         model.HealthChanged += view.OnHealthChanged;
+        TransitionToState(baseEnemy.CreateEnemyPatrulState(this,model,weapon)); //изночально у врага состояние патрулирования
+        base.Start();
+        model.stats.IgnoreMask = LayerMask.GetMask("Enemy", "Weapon", "ignoreMask");
+        model.stats.LayerMask = LayerMask.GetMask("Player");
+        weapon.attackMask = model.stats; //временно
     }
-    private void Update()
+    protected override void Update()
     {
-        if (isAngry)
-        {
-            baseEnemy.EnemyAI(enemyMovement,player,view,model, weapon);
-        }
+        base.Update();
+
+        if(enemyState != null) enemyState.StateExecute();
 
         if (Input.GetKeyUp(KeyCode.E)) //для проверки
         {
@@ -29,10 +34,6 @@ public class EnemyController : Controller
         {
             TakeDamage(10f);
         }
-        if (model.HP <= 0)
-        {
-            Die();
-        }
     }
 
     public void EnemyBlink() //используеться в анимации
@@ -40,19 +41,30 @@ public class EnemyController : Controller
         enemyMovement.Blink(player);
     }
 
-    public void EnemyStartAttack()
+    public void EnemyStartAttack() //используеться в анимации
     {
         weapon.StartOrStopAttack(true);
     }
 
-    public void EnemyStopAttack()
+    public void EnemyStopAttack() //используеться в анимации
     {
         weapon.StartOrStopAttack(false);
     }
 
-    public void AgrUbdate(Transform _player, bool _isAngry) 
+    public void AgrUbdate(Transform player, bool isAngry) 
     {
-        player = _player;
-        isAngry = _isAngry;
+        this.player = player;
+        this.isAngry = isAngry;
+    }
+
+    public void TransitionToState(EnemyState newState) //метод отвечает за смену состояния
+    {
+        enemyState = newState;
+    }
+
+    public override void Die()
+    {
+        enemyState = null; //если не обнулить состояние перед уничтожением то enemyState будет работать еще 1 кадр после уничтожения
+        Destroy(gameObject);
     }
 }

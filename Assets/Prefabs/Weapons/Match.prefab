@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3237375977346817386}
   - component: {fileID: 4972393924773095941}
   - component: {fileID: 3297391560615996259}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 381686114720814335}
   - component: {fileID: 3186843004198510921}
   - component: {fileID: 7670133838036530512}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +229,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1783614091552466656}
   - component: {fileID: -8134489798847621673}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Match
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,8 +264,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5ecce5af58b7624098cc23195e10496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAttack: 0
-  timer: 0
-  attackTime: 0.1
-  bullet: {fileID: 8350511591580038962, guid: 9757acec0993cc64c87017c70ed81045, type: 3}
+  bulletSpeed: 5
   attackPoint: {fileID: 229962367986285987}
+  isAttack: 0
+  bulletPrefab: {fileID: 4888169975687407041, guid: e8fcf327eb69dfd41bfdbd239245d1eb, type: 3}
+  defaultCapacity: 20
+  maxSize: 100
+  damageMultiplier: 1
+  attackSpeedMultiplier: 1
+  rangeMultiplier: 1

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4113481675808731528}
   - component: {fileID: 4917105754484869376}
   - component: {fileID: 8535305159337055121}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Stick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,13 +46,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab49bcc088b686049bbe9726a1708ffa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletSpeed: 5
+  attackPoint: {fileID: 0}
   isAttack: 0
-  timer: 0
-  attackTime: 1
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  damage: 10
+  bulletPrefab: {fileID: 0}
+  defaultCapacity: 20
+  maxSize: 100
+  damageMultiplier: 1
+  attackSpeedMultiplier: 1
+  rangeMultiplier: 1
 --- !u!136 &8535305159337055121
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -87,7 +89,7 @@ GameObject:
   - component: {fileID: 7056929606876103842}
   - component: {fileID: 7173023181075791253}
   - component: {fileID: 3088946279383320875}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}

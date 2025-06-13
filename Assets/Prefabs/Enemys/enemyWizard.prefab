@@ -9,15 +9,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4410674562036089105}
-  - component: {fileID: 5665905517626493207}
   - component: {fileID: 8805761580316762848}
   - component: {fileID: 1176276737450656073}
   - component: {fileID: 4426471331188465238}
   - component: {fileID: 3772112549058359225}
-  - component: {fileID: 8265196290972266112}
   - component: {fileID: 5131592022543225529}
   - component: {fileID: 3141162637072291902}
   - component: {fileID: 2791751750601214980}
+  - component: {fileID: 3751843110228303836}
+  - component: {fileID: 8385695455179761628}
   m_Layer: 6
   m_Name: enemyWizard
   m_TagString: Untagged
@@ -44,20 +44,6 @@ Transform:
   - {fileID: 6579557756447999168}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5665905517626493207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 67157182439231719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b057dc2aa3b6624d892b8887d2b9b1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  teleportTime: 2
-  isAttacking: 0
 --- !u!54 &8805761580316762848
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -142,25 +128,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  healthBar: {fileID: 8265196290972266112}
---- !u!114 &8265196290972266112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 67157182439231719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b26e19580609b8d419249de3dceaa1d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RedFillingSpeed: 0.4
-  RedDecreaseSpeed: 0.18
-  YellowDecreaseSpeed: 1
-  redHP: {fileID: 8397984040770922514}
-  yellowHP: {fileID: 4099610558032549304}
-  greenHP: {fileID: 1318860125066646695}
+  healthBar: {fileID: 0}
+  enemyCanvas: {fileID: 9077133935973996095}
 --- !u!114 &5131592022543225529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,6 +145,7 @@ MonoBehaviour:
   weapon: {fileID: 2995870866258043407}
   weaponSlot: {fileID: 4841318427094866526}
   baseStats: {fileID: 11400000, guid: 74f9a0b0a8860914e9622b3202d33cc2, type: 2}
+  player: {fileID: 0}
   isAngry: 0
 --- !u!114 &3141162637072291902
 MonoBehaviour:
@@ -217,6 +187,36 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.87, z: 0}
+--- !u!114 &3751843110228303836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67157182439231719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b057dc2aa3b6624d892b8887d2b9b1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8385695455179761628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67157182439231719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b26e19580609b8d419249de3dceaa1d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RedFillingSpeed: 0.4
+  RedDecreaseSpeed: 0.18
+  YellowDecreaseSpeed: 1
+  redHP: {fileID: 8397984040770922514}
+  yellowHP: {fileID: 4099610558032549304}
+  greenHP: {fileID: 1318860125066646695}
 --- !u!1 &2729985801587337515
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 6713212538991591340}
   - component: {fileID: 530085988040995635}
   - component: {fileID: 723691997562071114}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Agr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -358,7 +358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01f21bba23ae31c4da484c00a9ec44c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyAgr:
+  EnemyAgrEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5131592022543225529}
@@ -642,7 +642,7 @@ GameObject:
   - component: {fileID: 2206808680683885654}
   - component: {fileID: 7065031392390800100}
   - component: {fileID: 1843754162292811812}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -750,7 +750,7 @@ GameObject:
   - component: {fileID: 4136784844072805510}
   - component: {fileID: 5081433226711872844}
   - component: {fileID: 2553504490824013809}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1002,9 +1002,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3297391560615996259, guid: c80dcf8e367da0144986d4d726c5ecf0, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6576534819869101611, guid: c80dcf8e367da0144986d4d726c5ecf0, type: 3}
       propertyPath: m_Name
       value: Match
+      objectReference: {fileID: 0}
+    - target: {fileID: 7670133838036530512, guid: c80dcf8e367da0144986d4d726c5ecf0, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

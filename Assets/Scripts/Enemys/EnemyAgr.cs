@@ -1,12 +1,11 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Agr : MonoBehaviour
+public class EnemyAgr : MonoBehaviour
 {
     private bool isAngry = false;
     private Transform player;
-    public UnityEvent<Transform, bool> EnemyAgr;
+    public UnityEvent<Transform, bool> EnemyAgrEvent;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -14,7 +13,7 @@ public class Agr : MonoBehaviour
         {
             isAngry = true;
             player = other.transform;
-            EnemyAgr?.Invoke(player, isAngry);
+            EnemyAgrEvent?.Invoke(player, isAngry);
         }
     }
 
@@ -23,7 +22,7 @@ public class Agr : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isAngry = false;
-            EnemyAgr?.Invoke(player, isAngry);
+            EnemyAgrEvent?.Invoke(player, isAngry);
         }
     }
 }
