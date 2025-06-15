@@ -13,7 +13,13 @@ public interface IHealthStats
     float Armor {  get; set; }
 }
 
-public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IAttackStats 
+public interface IAttackMask
+{
+    LayerMask LayerMask { get; set; } //чему должна наносить урон
+    LayerMask IgnoreMask { get; set; } //что должна игнорировать
+}
+
+public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IAttackStats, IAttackMask
 {
     [Header("Health")]
     [SerializeField] private float maxHP;
@@ -24,6 +30,9 @@ public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IA
     [SerializeField] private float damage;
     [SerializeField] private float attackRange;
     [SerializeField] private float attackSpeed;
+    [Header("AttackMask")]
+    private LayerMask layerMask;
+    private LayerMask ignoreMask;
 
     public float MaxHP
     {
@@ -55,5 +64,17 @@ public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IA
     {
         get { return attackSpeed; }
         set { attackSpeed = value; }
+    }
+
+    public LayerMask LayerMask
+    {
+        get { return layerMask; }
+        set { layerMask = value; }
+    }
+
+    public LayerMask IgnoreMask
+    {
+        get { return ignoreMask; }
+        set { ignoreMask = value; }
     }
 }

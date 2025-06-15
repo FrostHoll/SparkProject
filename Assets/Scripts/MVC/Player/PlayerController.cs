@@ -3,20 +3,46 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : Controller
 {
-    public InputAction playerControls;
     private PlayerMovement playerMovement;
+    public GameObject weeeopen;
+    public InputSystem_Actions inputActions;
 
-    private void Start()
+    protected override void Start()
     {
-        playerControls.Enable();
         playerMovement = GetComponent<PlayerMovement>();
         model = new PlayerModel(baseStats);
         model.HealthChanged += view.OnHealthChanged;
+        base.Start();
+        model.stats.IgnoreMask = LayerMask.GetMask("Player", "Weapon", "ignoreMask");
+        model.stats.LayerMask = LayerMask.GetMask("Enemy");
+        weapon.attackMask = model.stats; //временно
     }
 
-    private void Update()
+    private void Awake()
     {
-        playerMovement.Move(playerControls,model.stats.Speed);
+        inputActions = new InputSystem_Actions();
+        inputActions.Enable();
+        view = GetComponent<View>();
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Player.Attack.performed += StartAttack;
+        inputActions.Player.Attack.canceled += StopAttack;
+    }
+    private void OnDisable()
+    {
+        inputActions.Player.Attack.performed -= StartAttack;
+        inputActions.Player.Attack.canceled -= StopAttack;
+    }
+
+
+
+    protected override void Update()  
+    {
+        base.Update();
+
+        playerMovement.Move(inputActions.Player.Move,model.stats.Speed);
 
         if (Input.GetKeyUp(KeyCode.E)) //для проверки
         {
@@ -26,5 +52,35 @@ public class PlayerController : Controller
         {
             TakeDamage(10f);
         }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            AddWeapor(weeeopen);
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            RemoveWeapon();
+        }
+    }
+    public void StartAttack(InputAction.CallbackContext obj)
+    {
+        if (weapon != null)
+        {
+            weapon.StartOrStopAttack(true);
+            view.StartAttackAnim();
+        }
+    }
+
+    public void StopAttack(InputAction.CallbackContext obj)
+    {
+        if (weapon != null)
+        {
+            weapon.StartOrStopAttack(false);
+            view.StopAttackAnim();
+        }
+    }
+
+    public override void Die()
+    {
+        
     }
 }

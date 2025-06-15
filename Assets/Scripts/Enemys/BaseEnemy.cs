@@ -1,45 +1,12 @@
 using UnityEngine;
-using UnityEngine.AI;
 
-public abstract class BaseEnemy : MonoBehaviour
-{
-    public EnemyStats enemyStats;
-    public float rotationSpeed = 2f;
+public abstract class BaseEnemy : MonoBehaviour //его дочерние классы отвечают за определение поведения врага.
+{     //проще говоря если накинуть на врага с палкой вместо EnemyWithStick закинуть EnemyWizard то враг будет вести себя как маг а не как враг с палкой
+    public abstract EnemyState CreateEnemyAttackState(EnemyController enemyController, Model enemyModel, BaseWeapon baseWeapon);
 
-    public bool isAngry = false;
-
-    public NavMeshAgent agent;
-    public Transform player;
-    public Animator animator;
-
-    private void Start()
+    public EnemyState CreateEnemyPatrulState(EnemyController enemyController, Model enemyModel, BaseWeapon baseWeapon) //состояние патруля у всех одинаковое 
+                                                                                                                       //при надобности это можно будет изменить
     {
-        agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
-        GetComponent<SphereCollider>().radius = enemyStats.AgrRadius;
-        agent.speed = enemyStats.Speed;
-        animator.speed = enemyStats.AttackSpeed; //временно
+        return new PatrolStat(enemyController,enemyModel,baseWeapon);
     }
-
-    private void Update()
-    {
-        if (isAngry)
-        {
-            MoveEnemy(player);
-        }
-    }
-
-    
-
-    public void LookAtTarget(Transform target) //поворачивает в сторону таргета
-    {
-        Vector3 targetDirection = target.position - transform.position;
-        targetDirection.y = 0;
-        Quaternion targetEnemyRotation = Quaternion.LookRotation(targetDirection);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetEnemyRotation, Time.deltaTime * rotationSpeed);
-    }
-
-    public abstract void MoveEnemy(Transform target);
-
-    public abstract void Attack();
 }
