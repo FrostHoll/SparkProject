@@ -40,7 +40,7 @@ public class FirstSkillPlayer : MonoBehaviour
         if (playerControlls != null)
             playerControlls.enabled = false;
 
-        RaycastRay.ability(surfaceLayer, explosionRadius, skillDamage);
+        CreatingDamageArea.AbilityDamageArea(surfaceLayer, explosionRadius, skillDamage);
 
         yield return new WaitForSeconds(castTime);
 

@@ -2,19 +2,19 @@ using UnityEngine;
 
 public class OpenInventory : MonoBehaviour
 {
-    private Canvas canvas;
+    private GameObject inventory;
 
     void Start()
     {
-        canvas = GetComponent<Canvas>();
-        canvas.enabled = false; // Disabling inventory at startup
+        inventory = GetComponent<GameObject>();
+        inventory.SetActive(false); // Disabling inventory at startup
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyUp(KeyCode.T))
         {
-            canvas.enabled = !canvas.enabled; // Disabling/enabling inventory
+            inventory.SetActive(!inventory.activeSelf); // Disabling/enabling inventory
         }
     }
 }

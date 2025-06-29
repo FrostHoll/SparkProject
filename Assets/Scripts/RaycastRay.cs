@@ -1,9 +1,9 @@
 using UnityEngine;
 using Unity.VisualScripting;
 
-public class RaycastRay : MonoBehaviour
+public static class CreatingDamageArea
 {
-    public static void ability(LayerMask surfaceLayer, float explosionRadius, float skillDamage)
+    public static void AbilityDamageArea(LayerMask surfaceLayer, float explosionRadius, float skillDamage)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, surfaceLayer))

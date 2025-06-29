@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Inventory : MonoBehaviour
 {
@@ -13,8 +14,8 @@ public class Inventory : MonoBehaviour
     // - swapping items in two slots;
     // - checking, if an item stored.
 
-    protected const int inventorySize = 10;
-    public Item[] Items = new Item[inventorySize];
+    private const int inventorySize = 10;
+    private Item[] Items = new Item[inventorySize];
 
     public event Action OnInventoryChanged;
 
@@ -142,4 +143,86 @@ public class Inventory : MonoBehaviour
 
         return false;
     }
+
+    // The "hotKeys" slots, second line of the inventory
+    // Functions:
+
+    // - using item (new);
+
+    // ( from Inventory "BottomLine": )
+    // - adding item;
+    // - adding item to a certain slot;
+    // - removing item;
+    // - getting item;
+    // - swapping items in two slots;
+    // - checking, if an item stored.
+
+    public InputAction playerControls;
+
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Alpha1))
+        {
+            UseItem(0);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha2))
+        {
+            UseItem(1);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha3))
+        {
+            UseItem(2);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha4))
+        {
+            UseItem(3);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha5))
+        {
+            UseItem(4);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha6))
+        {
+            UseItem(5);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha7))
+        {
+            UseItem(6);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha8))
+        {
+            UseItem(7);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha9))
+        {
+            UseItem(8);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha0))
+        {
+            UseItem(9);
+        }
+    }
+
+    // Using item
+    public void UseItem(int slotIndex)
+    {
+        if (slotIndex < 0 || slotIndex >= inventorySize)
+        {
+            Debug.LogError("Incorrect Slot Index!");
+            return;
+        }
+
+        if (Items[slotIndex] != null)
+        {
+            Items[slotIndex].ItemUse();
+
+            // If an item is stackable
+            if (Items[slotIndex].GetItemType() == ItemType.Consumable)
+            {
+                RemoveItem(slotIndex);
+            }
+        }
+        OnInventoryChanged?.Invoke();
+    }
+
 }
