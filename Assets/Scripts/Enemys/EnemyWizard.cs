@@ -1,45 +1,9 @@
 using UnityEngine;
 
-public class EnemyWizard : BaseEnemy
+public class EnemyWizard : BaseEnemy 
 {
-    public float teleportMaxRadius = 10f;
-    public float teleportMinRadius = 6f;
-    public float teleportHeight = 0.5f;
-    public float teleportTime = 2f;
-    private float timer = 0f;
-
-    public GameObject bullet;
-    [SerializeField]private Transform shotPoint;
-
-    private void Update()
+    public override EnemyState CreateEnemyAttackState(EnemyController enemyController, Model enemyModel, BaseWeapon baseWeapon)
     {
-        if (isAngry)
-        {
-            LookAtTarget(player);
-            if (timer >= 0)
-            {
-                timer -= Time.deltaTime;
-            }
-            else
-            {
-                MoveEnemy(player);
-            }
-        }
-    }
-
-    public override void Attack()
-    {
-        Instantiate(bullet, shotPoint.position, transform.rotation * Quaternion.Euler(0, 0, 180f));
-    }
-
-    public override void MoveEnemy(Transform target)
-    {
-        animator.SetTrigger("isTeleporting");
-        timer = teleportTime;
-    }
-
-    public void EnemyTeleportation()
-    {
-        transform.position = RandomTransformGenerator.CreateRandomTransformNearObject(player, teleportMaxRadius, teleportMinRadius, teleportHeight);
+        return new WizardRangeAttackState(enemyController, enemyModel, baseWeapon);
     }
 }

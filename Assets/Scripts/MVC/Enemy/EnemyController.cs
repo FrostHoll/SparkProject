@@ -2,15 +2,30 @@ using UnityEngine;
 
 public class EnemyController : Controller
 {
-    [SerializeField] private BaseEnemy baseEnemy;
-    private void Start()
+    private BaseEnemy baseEnemy;
+    private EnemyMovement enemyMovement;
+    private EnemyState enemyState;
+
+    public Transform player;
+    public bool isAngry = false;
+    protected override void Start()
     {
+        baseEnemy = GetComponent<BaseEnemy>();
+        enemyMovement = GetComponent<EnemyMovement>();
         model = new EnemyModel(baseStats);
         model.HealthChanged += view.OnHealthChanged;
-        baseEnemy = GetComponent<BaseEnemy>();
+        TransitionToState(baseEnemy.CreateEnemyPatrulState(this,model,weapon)); //изночально у врага состояние патрулирования
+        base.Start();
+        model.stats.IgnoreMask = LayerMask.GetMask("Enemy", "Weapon", "ignoreMask");
+        model.stats.LayerMask = LayerMask.GetMask("Player");
+        weapon.attackMask = model.stats; //временно
     }
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
+        if(enemyState != null) enemyState.StateExecute();
+
         if (Input.GetKeyUp(KeyCode.E)) //для проверки
         {
             ApplyHealing(10f);
@@ -21,20 +36,35 @@ public class EnemyController : Controller
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void EnemyBlink() //используеться в анимации
     {
-        if (other.CompareTag("Player"))
-        {
-            baseEnemy.isAngry = true;
-            baseEnemy.player = other.transform;
-        }
+        enemyMovement.Blink(player);
     }
 
-    private void OnTriggerExit(Collider other)
+    public void EnemyStartAttack() //используеться в анимации
     {
-        if (other.CompareTag("Player"))
-        {
-            baseEnemy.isAngry = false;
-        }
+        weapon.StartOrStopAttack(true);
+    }
+
+    public void EnemyStopAttack() //используеться в анимации
+    {
+        weapon.StartOrStopAttack(false);
+    }
+
+    public void AgrUbdate(Transform player, bool isAngry) 
+    {
+        this.player = player;
+        this.isAngry = isAngry;
+    }
+
+    public void TransitionToState(EnemyState newState) //метод отвечает за смену состояния
+    {
+        enemyState = newState;
+    }
+
+    public override void Die()
+    {
+        enemyState = null; //если не обнулить состояние перед уничтожением то enemyState будет работать еще 1 кадр после уничтожения
+        Destroy(gameObject);
     }
 }

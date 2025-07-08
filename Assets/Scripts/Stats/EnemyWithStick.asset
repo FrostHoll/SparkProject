@@ -15,7 +15,7 @@ MonoBehaviour:
   maxHP: 100
   armor: 10
   speed: 3.5
-  damage: 10
-  attackRange: 2.5
+  damage: 50
+  attackRange: 2
   attackSpeed: 1
   agrRadius: 10
