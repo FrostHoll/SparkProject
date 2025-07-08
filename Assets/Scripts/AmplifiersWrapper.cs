@@ -1,29 +1,36 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class AmplifiersWrapper : MonoBehaviour
+public class AmplifiersWrapper
 {
     private Dictionary<StatType, List<float>> _additiveAmps = new Dictionary<StatType, List<float>>();
     private Dictionary<StatType, List<float>> _multiplicativeAmps = new Dictionary<StatType, List<float>>();
 
-    public Dictionary<StatType, List<float>> addAmps => _additiveAmps;
-    public Dictionary<StatType, List<float>> multAmps => _multiplicativeAmps;
 
-    public void AddAmplifier(StatType type, float value, bool isFlat)
+    public void AddAmplifier(Amplifier amp)
     {
-        var targetDict = isFlat ? addAmps : multAmps;
+        var targetDict = amp.IsFlat ? _additiveAmps : _multiplicativeAmps; //по флажку определяем, в какой словарик добавить усилитель
 
-        if (!targetDict.ContainsKey(type))
-            targetDict[type] = new List<float>();
+        if (!targetDict.ContainsKey(amp.Type)) //если в словарике ещё нет опр типа, то мы создаём список для нового типа стата
+            targetDict[amp.Type] = new List<float>();
 
-        targetDict[type].Add(value);
+        targetDict[amp.Type].Add(amp.Value);
     }
 
-    public void RemoveAmplifier(StatType type, float value, bool isFlat)
+    public void RemoveAmplifier(Amplifier amp)
     {
-        var targetDict = isFlat ? addAmps : multAmps;
+        var targetDict = amp.IsFlat ? _additiveAmps : _multiplicativeAmps;
 
-        if (targetDict.TryGetValue(type, out var amps))
-            amps.Remove(value);
+        if (targetDict.TryGetValue(amp.Type, out var amps))
+            amps.Remove(amp.Value);
+    }
+
+    public float GetModifiedValue(StatType type, float baseValue) //пересчёт определённого типа статов
+    {
+        float additive = _additiveAmps.TryGetValue(type, out var addAmps) ? addAmps.Sum() : 0f;
+        float multiplicative = _multiplicativeAmps.TryGetValue(type, out var multAmps) ? 1f + multAmps.Sum() : 1f;
+
+        return (baseValue + additive) * multiplicative;
     }
 }

@@ -1,12 +1,13 @@
 using UnityEngine;
 
-public abstract class Artifact : MonoBehaviour
+public abstract class Artifact
 {
     public abstract string ArtifactName { get; }
     public Sprite Icon;
-    public AmplifiersWrapper Amplifiers;
 
     protected Controller _owner;
+
+    protected Amplifier? CurrentAmplifier;
 
     public virtual void ApplyEffect(Controller player)
     {

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ public abstract class Controller : MonoBehaviour
     protected Model model;
     protected View view;
     [SerializeField] protected BaseStats baseStats;
+
+    protected List<Artifact> ActiveArtifacts = new();
 
     private void Awake()
     {
@@ -24,8 +27,20 @@ public abstract class Controller : MonoBehaviour
         view.UpdateHealthBar(model.HP,model.stats.MaxHP);
     }
 
-    public void ApplyAmp(StatType type, float value)
+    public void ApplyAmp(Amplifier amp) => model.ApplyAmp(amp);
+    public void RemoveAmp(Amplifier amp) => model.RemoveAmp(amp);
+
+    public void AddArtifact(Artifact artifact)
     {
-        model.ApplyAmp(type, value);
+        ActiveArtifacts.Add(artifact);
+        artifact.ApplyEffect(this);
+    }
+
+    public void RemoveArtifact(Artifact artifact)
+    {
+        if (ActiveArtifacts.Remove(artifact))
+        {
+            artifact.RemoveEffect(this);
+        }
     }
 }

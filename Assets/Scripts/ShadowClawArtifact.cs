@@ -1,3 +1,5 @@
+using static UnityEngine.GraphicsBuffer;
+
 public class ShadowClawArtifact : Artifact
 {
     public override string ArtifactName => "Shadow Claw";
@@ -5,18 +7,16 @@ public class ShadowClawArtifact : Artifact
 
     public override void ApplyEffect(Controller player)
     {
-        Amplifiers.AddAmplifier(  StatType.Damage, effect, false );
-        player.ApplyAmp(StatType.Damage, effect);
+        CurrentAmplifier = new Amplifier(StatType.Damage, effect, false);
+        player.ApplyAmp(CurrentAmplifier.Value);
     }
 
     public override void RemoveEffect(Controller player)
     {
-        Amplifiers.RemoveAmplifier(StatType.Damage, effect, false );
-        
+        if (CurrentAmplifier.HasValue)
+            player.RemoveAmp(CurrentAmplifier.Value);
+
     }
 
-    public override Artifact Clone()
-    {
-        return new ShadowClawArtifact();
-    }
+    public override Artifact Clone() => new ShadowClawArtifact();
 }

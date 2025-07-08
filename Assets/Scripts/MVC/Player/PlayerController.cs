@@ -27,4 +27,9 @@ public class PlayerController : Controller
             TakeDamage(10f);
         }
     }
+
+    public void CollectArtifact(Artifact artifact)
+    {
+        AddArtifact(artifact);
+    }
 }
