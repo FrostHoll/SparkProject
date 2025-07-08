@@ -6,7 +6,7 @@ public class PatrolStat : EnemyState
 
     //private float maxPatrolRadius = 4;
     //private float minPatrolRadius = 2;
-    public PatrolStat(EnemyController enemyController, Model enemyModel, BaseWeapon baseWeapon)
+    public PatrolStat(EnemyController enemyController, Model enemyModel, BaseWeapon baseWeapon = null)
         : base(enemyController, enemyModel, baseWeapon)
     {
         enemyPosition = enemyController.gameObject.transform;

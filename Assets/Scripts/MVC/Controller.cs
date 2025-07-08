@@ -7,16 +7,11 @@ public abstract class Controller : MonoBehaviour
     [SerializeField] protected BaseWeapon weapon;
     [SerializeField] protected Transform weaponSlot;
     [SerializeField] protected BaseStats baseStats;
+    public Repulsiveness repulsiveness;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         view = GetComponent<View>();
-        weapon.attackStats = baseStats;
-    }
-
-    protected virtual void Start()
-    {
-        if(weapon != null) weapon.attackStats = model.stats;
     }
 
     protected virtual void Update()
@@ -33,20 +28,24 @@ public abstract class Controller : MonoBehaviour
         view.healthBar.UpdateHealthBar(model.HP,model.stats.MaxHP);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, float repulsionForce = 0, GameObject source = null)
     {
         model.TakeDamage(damage);
         view.healthBar.UpdateHealthBar(model.HP,model.stats.MaxHP);
+
+        if (source != null && repulsiveness != null)
+        {
+            repulsiveness.ApplyRepulsion(source, repulsionForce);
+        }
     }
 
-    public void AddWeapor(GameObject newWeapon) // пока что один слот оружия. 
+    public void AddWeapor(BaseWeapon newWeapon) 
     {
         if(weapon == null)
         {
-            GameObject WeponGameObject = Instantiate(newWeapon, weaponSlot);
-            weapon = WeponGameObject.GetComponent<BaseWeapon>();
-            weapon.attackStats = model.stats;
-            weapon.attackMask = model.stats;
+            BaseWeapon weaponInstance = Instantiate(newWeapon, weaponSlot); 
+            weapon = weaponInstance;
+            weapon.AddStats(baseStats);
         }
     }
 

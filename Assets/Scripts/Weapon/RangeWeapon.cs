@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Pool;
 
 public class RangeWeapon : BaseWeapon
 {
@@ -7,7 +6,7 @@ public class RangeWeapon : BaseWeapon
     {
         if (isAttack && Time.time >= timer)
         {
-            Attack(attackStats.Damage, attackStats.AttackRange);
+            Shooting(attackStats.Damage, attackStats.AttackRange, attackStats.RepulsionForce);
             timer = Time.time + attackStats.AttackSpeed * attackSpeedMultiplier;
         }
     }

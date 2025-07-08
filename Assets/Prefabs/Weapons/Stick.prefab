@@ -47,14 +47,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 5
-  attackPoint: {fileID: 0}
-  isAttack: 0
-  bulletPrefab: {fileID: 0}
-  defaultCapacity: 20
-  maxSize: 100
   damageMultiplier: 1
   attackSpeedMultiplier: 1
   rangeMultiplier: 1
+  repulsionMultiplier: 2
+  attackPoint: {fileID: 0}
+  isAttack: 0
 --- !u!136 &8535305159337055121
 CapsuleCollider:
   m_ObjectHideFlags: 0

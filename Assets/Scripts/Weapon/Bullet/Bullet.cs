@@ -7,17 +7,26 @@ public class Bullet : MonoBehaviour
     public float speed; //скорость пули зависит от оружия
     public float lifeTime = 2.5f;
     public IAttackMask attackMask;
-    public float damage = 0;
+    public float damage;
+    public float repulsionForce;
 
     private IObjectPool<Bullet> bulletPool;
 
     public IObjectPool<Bullet> BulletPool { set => bulletPool = value; }
 
+    public void Initialize(float bulletSpeed, float bulletDamage, float bulletLifeTime, float repulsionForce, IAttackMask mask) 
+    {
+        speed = bulletSpeed;
+        damage = bulletDamage;
+        lifeTime = bulletLifeTime;
+        this.repulsionForce = repulsionForce;
+        attackMask = mask;
+    }
+
     public void Deactivate()
     {
         StartCoroutine(DeactivateRoutine(lifeTime));
     }
-
     IEnumerator DeactivateRoutine(float lifeTime) 
     {
         yield return new WaitForSeconds(lifeTime);
@@ -40,7 +49,7 @@ public class Bullet : MonoBehaviour
         {
             if (other.TryGetComponent(out Controller controller))
             {
-                controller.TakeDamage(damage);
+                controller.TakeDamage(damage, repulsionForce, gameObject);
             }
             bulletPool.Release(this);
         }

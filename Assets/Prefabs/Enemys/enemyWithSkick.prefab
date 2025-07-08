@@ -722,7 +722,15 @@ MonoBehaviour:
   teleportMaxRadius: 10
   teleportMinRadius: 6
   teleportHeight: 0.5
+  enemyHight: 0.2
+  whatIsGrount:
+    serializedVersion: 2
+    m_Bits: 8
+  graundet: 0
   rotationSpeed: 2
+  levitationHeight: 1
+  levitationSpeed: 0.5
+  dampingFactor: 0.5
   agent: {fileID: 6638769064725229132}
 --- !u!114 &60819294032828896
 MonoBehaviour:
