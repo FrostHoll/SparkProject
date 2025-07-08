@@ -1,15 +1,22 @@
 using System;
+using Unity.VisualScripting;
+using UnityEngine.Rendering;
 
 public abstract class Model
 {
     public BaseStats stats;
     public float HP;
+
+    public BaseStats CurrentStats { get; }
+
     public event Action<float, float> HealthChanged;
+    public AmplifiersWrapper Amplifiers { get; } = new();
 
     public Model(BaseStats baseStats)
     {
         stats = baseStats;
         HP = stats.MaxHP;
+        CurrentStats = baseStats.CloneForRuntime();
     }
 
     public virtual void TakeDamage(float damage)
@@ -37,4 +44,25 @@ public abstract class Model
         }
         HealthChanged?.Invoke(HP, stats.MaxHP);
     }
-}
+
+    public void ApplyAmp(Amplifier amp)
+    {
+        Amplifiers.AddAmplifier(amp);
+        RecalculateStats();
+    }
+
+    public void RemoveAmp(Amplifier amp)
+    {
+        Amplifiers.RemoveAmplifier(amp);
+        RecalculateStats();
+    }
+
+    private void RecalculateStats() //пересчёт всех статов
+    {
+        CurrentStats.Damage = Amplifiers.GetModifiedValue(StatType.Damage, stats.Damage);
+        CurrentStats.MaxHP = Amplifiers.GetModifiedValue(StatType.MaxHP, stats.MaxHP);
+        CurrentStats.AttackRange = Amplifiers.GetModifiedValue(StatType.AttackRange, stats.AttackRange);
+        CurrentStats.AttackSpeed = Amplifiers.GetModifiedValue(StatType.AttackSpeed, stats.AttackSpeed);
+        CurrentStats.Armor = Amplifiers.GetModifiedValue(StatType.Armor, stats.Armor);
+    }
+} 
