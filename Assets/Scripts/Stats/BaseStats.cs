@@ -1,13 +1,19 @@
 using UnityEngine;
 
-public interface IAttackStats
+public interface IAttackStats 
 {
     float Damage { get; set; }
     float AttackRange { get; set; }
     float AttackSpeed { get; set; }
+    float RepulsionForce { get; set; }
 }
 
-public interface IHealthStats
+public interface IRepulsionResistance
+{
+    float RepulsionResistance { get; set; }
+}
+
+public interface IHealthStats : IRepulsionResistance
 {
     float MaxHP { get; set; }
     float Armor {  get; set; }
@@ -24,12 +30,14 @@ public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IA
     [Header("Health")]
     [SerializeField] private float maxHP;
     [SerializeField] private float armor;
+    [SerializeField] private float repulsionResistance;
     [Header("Movement")]
     [SerializeField] private float speed;
     [Header("Attack")]
     [SerializeField] private float damage;
     [SerializeField] private float attackRange;
     [SerializeField] private float attackSpeed;
+    [SerializeField] private float repulsionForce = 4f;
     [Header("AttackMask")]
     private LayerMask layerMask;
     private LayerMask ignoreMask;
@@ -44,12 +52,16 @@ public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IA
         get { return armor; }
         set { armor = value; }
     }
+    public float RepulsionResistance
+    {
+        get { return repulsionResistance; }
+        set { repulsionResistance = value; }
+    }
     public float Speed
     {
         get { return speed; }
         set { speed = value; }
     }
-
     public float Damage
     {
         get { return damage; }
@@ -66,6 +78,12 @@ public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IA
         set { attackSpeed = value; }
     }
 
+    public float RepulsionForce
+    {
+        get { return repulsionForce; }
+        set { repulsionForce = value; }
+    }
+
     public BaseStats CloneForRuntime()
     {
         var copy = CreateInstance<BaseStats>();
@@ -75,7 +93,9 @@ public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IA
         copy.damage = damage;
         copy.attackRange = attackRange;
         copy.attackSpeed = attackSpeed;
+        copy.repulsionForce = repulsionForce;
         return copy;
+    }
 
     public LayerMask LayerMask
     {

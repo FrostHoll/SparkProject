@@ -162,7 +162,15 @@ MonoBehaviour:
   teleportMaxRadius: 10
   teleportMinRadius: 6
   teleportHeight: 0.5
+  enemyHight: 0.2
+  whatIsGrount:
+    serializedVersion: 2
+    m_Bits: 8
+  graundet: 0
   rotationSpeed: 4
+  levitationHeight: 1
+  levitationSpeed: 0.5
+  dampingFactor: 0.5
   agent: {fileID: 1176276737450656073}
 --- !u!136 &2791751750601214980
 CapsuleCollider:
@@ -962,6 +970,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4841318427094866526}
     m_Modifications:
+    - target: {fileID: -8134489798847621673, guid: c80dcf8e367da0144986d4d726c5ecf0, type: 3}
+      propertyPath: isAttack
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1783614091552466656, guid: c80dcf8e367da0144986d4d726c5ecf0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

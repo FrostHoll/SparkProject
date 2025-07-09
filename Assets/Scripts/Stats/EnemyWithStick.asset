@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 100
   armor: 10
+  repulsionResistance: 0
   speed: 3.5
   damage: 50
   attackRange: 2
   attackSpeed: 1
+  repulsionForce: 50
   agrRadius: 10

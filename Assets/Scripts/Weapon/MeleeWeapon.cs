@@ -8,8 +8,13 @@ public class MeleeWeapon : BaseWeapon
         {
             if (other.TryGetComponent(out Controller controller))
             {
-                controller.TakeDamage(attackStats.Damage * damageMultiplier);
+                DamageTrigger(controller, other.gameObject);
             }
         }
+    }
+
+    public virtual void DamageTrigger(Controller controller, GameObject attacker)
+    {
+        controller.TakeDamage(attackStats.Damage * damageMultiplier, attackStats.RepulsionForce * repulsionMultiplier, gameObject);
     }
 }

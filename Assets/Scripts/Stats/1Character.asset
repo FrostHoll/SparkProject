@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 100
   armor: 100
+  repulsionResistance: 0
   speed: 8
   damage: 10
   attackRange: 3
   attackSpeed: 0.1
+  repulsionForce: 8
   timeOfDash: 0.5
   dashIncreaseSpeed: 3

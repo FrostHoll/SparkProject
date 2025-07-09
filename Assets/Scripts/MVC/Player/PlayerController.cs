@@ -4,25 +4,28 @@ using UnityEngine.InputSystem;
 public class PlayerController : Controller
 {
     private PlayerMovement playerMovement;
-    public GameObject weeeopen;
     public InputSystem_Actions inputActions;
+    public BaseWeapon wiapone;
 
-    protected override void Start()
+    protected void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
         model = new PlayerModel(baseStats);
+        repulsiveness = new Repulsiveness(this, model.stats);
         model.HealthChanged += view.OnHealthChanged;
-        base.Start();
         model.stats.IgnoreMask = LayerMask.GetMask("Player", "Weapon", "ignoreMask");
         model.stats.LayerMask = LayerMask.GetMask("Enemy");
-        weapon.attackMask = model.stats; //временно
+        if(weapon != null )
+        {
+            weapon.AddStats(model.stats);
+        }
     }
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         inputActions = new InputSystem_Actions();
         inputActions.Enable();
-        view = GetComponent<View>();
     }
 
     private void OnEnable()
@@ -54,14 +57,14 @@ public class PlayerController : Controller
         }
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            AddWeapor(weeeopen);
+            AddWeapor(wiapone);
         }
         if (Input.GetKeyDown(KeyCode.U))
         {
             RemoveWeapon();
         }
     }
-    public void StartAttack(InputAction.CallbackContext obj)
+    private void StartAttack(InputAction.CallbackContext obj)
     {
         if (weapon != null)
         {
@@ -70,7 +73,7 @@ public class PlayerController : Controller
         }
     }
 
-    public void StopAttack(InputAction.CallbackContext obj)
+    private void StopAttack(InputAction.CallbackContext obj)
     {
         if (weapon != null)
         {

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+//[RequireComponent (typeof(BaseEnemy),typeof(EnemyMovement))]
 public class EnemyController : Controller
 {
     private BaseEnemy baseEnemy;
@@ -8,17 +9,26 @@ public class EnemyController : Controller
 
     public Transform player;
     public bool isAngry = false;
-    protected override void Start()
+
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
+    protected void Start()
     {
         baseEnemy = GetComponent<BaseEnemy>();
         enemyMovement = GetComponent<EnemyMovement>();
         model = new EnemyModel(baseStats);
+        repulsiveness = new Repulsiveness(this, model.stats);
         model.HealthChanged += view.OnHealthChanged;
-        TransitionToState(baseEnemy.CreateEnemyPatrulState(this,model,weapon)); //изночально у врага состояние патрулирования
-        base.Start();
         model.stats.IgnoreMask = LayerMask.GetMask("Enemy", "Weapon", "ignoreMask");
         model.stats.LayerMask = LayerMask.GetMask("Player");
-        weapon.attackMask = model.stats; //временно
+        if (weapon != null)
+        {
+            weapon.AddStats(model.stats);
+        }
+        TransitionToState(baseEnemy.CreateEnemyPatrulState(this,model,weapon)); //изночально у врага состояние патрулирования
     }
     protected override void Update()
     {
@@ -51,7 +61,7 @@ public class EnemyController : Controller
         weapon.StartOrStopAttack(false);
     }
 
-    public void AgrUbdate(Transform player, bool isAngry) 
+    public void AgrUpdate(Transform player, bool isAngry) 
     {
         this.player = player;
         this.isAngry = isAngry;
@@ -64,7 +74,6 @@ public class EnemyController : Controller
 
     public override void Die()
     {
-        enemyState = null; //если не обнулить состояние перед уничтожением то enemyState будет работать еще 1 кадр после уничтожения
-        Destroy(gameObject);
+        baseEnemy.EnemyDie(enemyState);
     }
 }
