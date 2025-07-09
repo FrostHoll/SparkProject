@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 
 public abstract class Controller : MonoBehaviour 
@@ -8,6 +10,8 @@ public abstract class Controller : MonoBehaviour
     [SerializeField] protected Transform weaponSlot;
     [SerializeField] protected BaseStats baseStats;
     public Repulsiveness repulsiveness;
+
+    protected List<Artifact> ActiveArtifacts = new();
 
     protected virtual void Awake()
     {
@@ -46,6 +50,24 @@ public abstract class Controller : MonoBehaviour
             BaseWeapon weaponInstance = Instantiate(newWeapon, weaponSlot); 
             weapon = weaponInstance;
             weapon.AddStats(baseStats);
+        }
+    }
+
+
+    public void ApplyAmp(Amplifier amp) => model.ApplyAmp(amp);
+    public void RemoveAmp(Amplifier amp) => model.RemoveAmp(amp);
+
+    public void AddArtifact(Artifact artifact)
+    {
+        ActiveArtifacts.Add(artifact);
+        artifact.ApplyEffect(this);
+    }
+
+    public void RemoveArtifact(Artifact artifact)
+    {
+        if (ActiveArtifacts.Remove(artifact))
+        {
+            artifact.RemoveEffect(this);
         }
     }
 

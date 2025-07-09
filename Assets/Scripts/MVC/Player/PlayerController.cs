@@ -86,4 +86,9 @@ public class PlayerController : Controller
     {
         
     }
+
+    public void CollectArtifact(Artifact artifact)
+    {
+        AddArtifact(artifact);
+    }
 }

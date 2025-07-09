@@ -77,11 +77,26 @@ public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IA
         get { return attackSpeed; }
         set { attackSpeed = value; }
     }
+
     public float RepulsionForce
     {
         get { return repulsionForce; }
         set { repulsionForce = value; }
     }
+
+    public BaseStats CloneForRuntime()
+    {
+        var copy = CreateInstance<BaseStats>();
+        copy.maxHP = maxHP;
+        copy.armor = armor;
+        copy.speed = speed;
+        copy.damage = damage;
+        copy.attackRange = attackRange;
+        copy.attackSpeed = attackSpeed;
+        copy.repulsionForce = repulsionForce;
+        return copy;
+    }
+
     public LayerMask LayerMask
     {
         get { return layerMask; }
