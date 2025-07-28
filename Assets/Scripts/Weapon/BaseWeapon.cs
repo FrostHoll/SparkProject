@@ -59,7 +59,7 @@ public abstract class BaseWeapon : MonoBehaviour
             case AtkStat.AtkSpeed:
                 return calculatedAttackSpeed;
         }
-        Debug.Log("Такого стата нет");
+        Debug.Log("Stat not found");
         return 1f;
     }
 }
