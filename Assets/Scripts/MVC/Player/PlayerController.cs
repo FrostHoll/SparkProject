@@ -3,21 +3,23 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : Controller
 {
+    [SerializeField] CharacterStats characterStats;
     private PlayerMovement playerMovement;
     public InputSystem_Actions inputActions;
-    public BaseWeapon wiapone;
+    public BaseWeapon dopWeapon;
 
     protected void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
-        model = new PlayerModel(baseStats);
+        model = new PlayerModel(characterStats);
         repulsiveness = new Repulsiveness(this, model.stats);
         model.HealthChanged += view.OnHealthChanged;
-        model.stats.IgnoreMask = LayerMask.GetMask("Player", "Weapon", "ignoreMask");
-        model.stats.LayerMask = LayerMask.GetMask("Enemy");
+        SetSide();
         if(weapon != null )
         {
-            weapon.AddStats(model.stats);
+            model.InitializeCurrentWeaponAttackSpeed(weapon.baseAttackTime);
+            weapon.UpdateWeaponStats(model.stats, model.calculatedAttackSpeed);
+            view.AttackSpeedAnimChanged(model.calculatedAttackSpeed);
         }
     }
 
@@ -57,7 +59,7 @@ public class PlayerController : Controller
         }
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            AddWeapor(wiapone);
+            AddWeapon(dopWeapon);
         }
         if (Input.GetKeyDown(KeyCode.U))
         {
@@ -85,6 +87,14 @@ public class PlayerController : Controller
     public override void Die()
     {
         
+    }
+
+    public override void SetSide(IAttackMask masks = null, string setTag = null, int layerIndex = 0)
+    {
+        model.stats.LayerMask = masks == null ? LayerMask.GetMask("Enemy") : masks.LayerMask;
+        model.stats.IgnoreMask = masks == null ? LayerMask.GetMask("Player", "Weapon", "ignoreMask") : masks.IgnoreMask;
+        gameObject.layer = layerIndex == 0 ? LayerMask.NameToLayer("Player") : layerIndex;
+        gameObject.tag = setTag == null ? "Player" : setTag;
     }
 
     public void CollectArtifact(Artifact artifact)

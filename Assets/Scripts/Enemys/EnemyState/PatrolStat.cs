@@ -20,7 +20,7 @@ public class PatrolStat : EnemyState
         }
         else
         {
-            enemyMovement.MoveEnemy(enemyPosition.position,model.stats.Speed);
+            //enemyMovement.MoveEnemy(enemyPosition.position,model.stats.Speed); Надо будет переделать
         }
     }
 }

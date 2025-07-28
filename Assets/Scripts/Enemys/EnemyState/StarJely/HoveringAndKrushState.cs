@@ -15,7 +15,7 @@ public class HoveringAndKrushState : EnemyState
 
     public override void StateExecute()
     {
-        if (enemyController.isAngry)
+        if (enemyController.isAngry && player != null)
         {
             if(timer <= 0)
             {

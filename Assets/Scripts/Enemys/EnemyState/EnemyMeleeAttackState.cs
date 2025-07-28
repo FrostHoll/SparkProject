@@ -10,11 +10,11 @@ public class EnemyMeleeAttackState : EnemyState
 
     public override void StateExecute()
     {
-        if (enemyController.isAngry)
+        if (enemyController.isAngry && player != null)
         {
             enemyMovement.MoveEnemy(player.position, model.stats.Speed);
             enemyMovement.LookAtTarget(player);
-            if (Vector3.Distance(player.position, enemyMovement.transform.position) <= model.stats.AttackRange)
+            if (Vector3.Distance(player.position, enemyMovement.transform.position) <= weapon.GetAtkStat(AtkStat.Range))
             {
                 weapon.StartOrStopAttack(true);
                 view.StartAttackAnim();

@@ -14,6 +14,11 @@ public abstract class View : MonoBehaviour
         this.maxHP = maxHP;
     }
 
+    public virtual void AttackSpeedAnimChanged(float speed)
+    {
+        animator.SetFloat("AttackSpeed", speed);
+    }
+
     private void Start()
     {
         animator = GetComponent<Animator>();

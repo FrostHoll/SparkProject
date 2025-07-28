@@ -4,10 +4,11 @@ public abstract class BaseWeapon : MonoBehaviour
 {
     [Header("Stats")]
     protected IAttackStats attackStats;
+    protected float calculatedAttackSpeed;
+    public float baseAttackTime = 1;
     [SerializeField] protected float bulletSpeed = 5;
     [Header("Multipliers")]
     [SerializeField] protected float damageMultiplier = 1;
-    [SerializeField] protected float attackSpeedMultiplier = 1;
     [SerializeField] protected float rangeMultiplier = 1;
     [SerializeField] protected float repulsionMultiplier = 1;
 
@@ -22,10 +23,11 @@ public abstract class BaseWeapon : MonoBehaviour
         isAttack = canAttack;
     }
 
-    public void AddStats(BaseStats baseStats)
+    public void UpdateWeaponStats(BaseStats baseStats, float calculatedAttackSpeed)
     {
-        this.attackStats = baseStats;
-        this.attackMask = baseStats;
+        attackStats = baseStats;
+        attackMask = baseStats;
+        this.calculatedAttackSpeed = calculatedAttackSpeed;
     }
 
     public void Shooting(float damage, float range, float repulsionForce)
@@ -40,7 +42,24 @@ public abstract class BaseWeapon : MonoBehaviour
         Quaternion yRotation = Quaternion.Euler(0f, attackPoint.rotation.eulerAngles.y, 0f);
         bulletObject.transform.SetPositionAndRotation(attackPoint.position, yRotation);
 
-        bulletObject.Initialize(bulletSpeed, damage * damageMultiplier, range * rangeMultiplier, repulsionForce * repulsionMultiplier, attackMask);
+        bulletObject.Initialize(bulletSpeed, GetAtkStat(AtkStat.Damage), GetAtkStat(AtkStat.Range), GetAtkStat(AtkStat.Repulsion), attackMask);
         bulletObject.Deactivate();
+    }
+
+    public float GetAtkStat(AtkStat statName)
+    {
+        switch (statName)
+        {
+            case AtkStat.Damage:
+                return attackStats.Damage * damageMultiplier;
+            case AtkStat.Range:
+                return attackStats.AttackRange * rangeMultiplier;
+            case AtkStat.Repulsion:
+                return attackStats.RepulsionForce * repulsionMultiplier;
+            case AtkStat.AtkSpeed:
+                return calculatedAttackSpeed;
+        }
+        Debug.Log("Такого стата нет");
+        return 1f;
     }
 }

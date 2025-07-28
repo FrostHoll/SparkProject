@@ -13,7 +13,7 @@ public class WizardRangeAttackState : EnemyState
 
     public override void StateExecute()
     {
-        if (enemyController.isAngry)
+        if (enemyController.isAngry && player != null)
         {
             enemyMovement.agent.isStopped = true;
             enemyMovement.LookAtTarget(player);
@@ -24,7 +24,7 @@ public class WizardRangeAttackState : EnemyState
             else
             {
                 view.animator.SetTrigger("isTeleporting");
-                timer = teleportTime;
+                timer = teleportTime / model.calculatedAttackSpeed; 
             }
         }
         else

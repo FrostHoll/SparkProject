@@ -10,14 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75bad691c1b38354691d4f9506a7a145, type: 3}
-  m_Name: EnemyWithStick
+  m_Name: Necromancer
   m_EditorClassIdentifier: 
   maxHP: 100
   armor: 10
-  repulsionResistance: 0
-  speed: 3.5
-  damage: 50
-  attackRange: 2
-  attackSpeed: 1
-  repulsionForce: 50
-  agrRadius: 10
+  repulsionResistance: 0.1
+  speed: 4
+  damage: 10
+  attackRange: 3
+  attackSpeed: 75
+  repulsionForce: 4
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  ignoreMask:
+    serializedVersion: 2
+    m_Bits: 0
+  agrRadius: 30

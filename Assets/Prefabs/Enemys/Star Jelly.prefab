@@ -204,10 +204,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 127
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -227,6 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01f21bba23ae31c4da484c00a9ec44c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetTag: Player
   EnemyAgrEvent:
     m_PersistentCalls:
       m_Calls:
@@ -242,6 +243,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  targetsInTrigger: []
 --- !u!1 &4716202808941731765
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,7 +519,7 @@ GameObject:
   - component: {fileID: 8910597021399891489}
   m_Layer: 6
   m_Name: Star Jelly
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -563,7 +565,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
@@ -641,7 +643,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 519591509101716941}
   weaponSlot: {fileID: 7937779088198356544}
-  baseStats: {fileID: 11400000, guid: 74f9a0b0a8860914e9622b3202d33cc2, type: 2}
+  enemyStats: {fileID: 11400000, guid: 74f9a0b0a8860914e9622b3202d33cc2, type: 2}
   player: {fileID: 0}
   isAngry: 0
 --- !u!114 &3620190764640511656

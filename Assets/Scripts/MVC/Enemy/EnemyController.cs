@@ -1,9 +1,11 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 //[RequireComponent (typeof(BaseEnemy),typeof(EnemyMovement))]
 public class EnemyController : Controller
 {
-    private BaseEnemy baseEnemy;
+    private EnemyBaseAI baseEnemy;
+    [SerializeField] private EnemyStats enemyStats;
     private EnemyMovement enemyMovement;
     private EnemyState enemyState;
 
@@ -13,20 +15,21 @@ public class EnemyController : Controller
     protected override void Awake()
     {
         base.Awake();
+        model = new EnemyModel(CopyEnemyStats(enemyStats));
+        SetSide();
     }
 
     protected void Start()
     {
-        baseEnemy = GetComponent<BaseEnemy>();
+        baseEnemy = GetComponent<EnemyBaseAI>();
         enemyMovement = GetComponent<EnemyMovement>();
-        model = new EnemyModel(baseStats);
         repulsiveness = new Repulsiveness(this, model.stats);
         model.HealthChanged += view.OnHealthChanged;
-        model.stats.IgnoreMask = LayerMask.GetMask("Enemy", "Weapon", "ignoreMask");
-        model.stats.LayerMask = LayerMask.GetMask("Player");
         if (weapon != null)
         {
-            weapon.AddStats(model.stats);
+            model.InitializeCurrentWeaponAttackSpeed(weapon.baseAttackTime);
+            weapon.UpdateWeaponStats(model.stats, model.calculatedAttackSpeed);
+            view.AttackSpeedAnimChanged(model.calculatedAttackSpeed);
         }
         TransitionToState(baseEnemy.CreateEnemyPatrulState(this,model,weapon)); //изночально у врага состояние патрулирования
     }
@@ -74,6 +77,39 @@ public class EnemyController : Controller
 
     public override void Die()
     {
-        baseEnemy.EnemyDie(enemyState);
+        enemyState = null; //если не обнулить состояние перед уничтожением то enemyState будет работать еще 1 кадр после уничтожения
+        baseEnemy.EnemyDie();
+    }
+
+    public override void SetSide(IAttackMask masks = null, string setTag = null, int layerIndex = 0) //метод отвечает за смену стороны. За или протиа игрока.
+    {
+        model.stats.LayerMask = masks == null ? LayerMask.GetMask("Player") : masks.LayerMask;
+        model.stats.IgnoreMask = masks == null ? LayerMask.GetMask("Enemy", "Weapon", "ignoreMask") : masks.IgnoreMask;
+        gameObject.layer = layerIndex == 0 ? LayerMask.NameToLayer("Enemy") : layerIndex;
+        gameObject.tag = setTag == null ? "Enemy" : setTag;
+    }
+
+    public void SetEnemyAttackStats(float damage = 0, float repulsionForce = 0, float range = 0, float attackSpeed = 0) 
+    {
+        if(damage != 0) model.stats.Damage = damage;
+        if(repulsionForce != 0) model.stats.RepulsionForce = repulsionForce;
+        if(range != 0) model.stats.AttackRange = range;
+        if (attackSpeed != 0)
+        {
+            model.stats.AttackSpeed = attackSpeed;
+            model.AttackSpeedCalculate();
+            view.AttackSpeedAnimChanged(model.calculatedAttackSpeed);
+        }
+    }
+
+    public EnemyStats CopyEnemyStats(EnemyStats enemyStats)
+    {
+        EnemyStats statsCopy = Instantiate(enemyStats);
+        return statsCopy;
+    }
+
+    public IEnemyStats TransferEnemyStats()
+    {
+        return enemyStats;
     }
 }
