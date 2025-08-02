@@ -8,3 +8,11 @@ public enum StatType
     MaxHP,
     Armor,
 }
+
+public enum AtkStat
+{
+    Damage,
+    Range,
+    Repulsion,
+    AtkSpeed
+}

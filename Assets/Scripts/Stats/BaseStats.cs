@@ -1,10 +1,14 @@
 using UnityEngine;
 
-public interface IAttackStats 
+public interface IAttackSpeed
+{
+    float AttackSpeed { get; set; }
+}
+
+public interface IAttackStats : IAttackSpeed
 {
     float Damage { get; set; }
     float AttackRange { get; set; }
-    float AttackSpeed { get; set; }
     float RepulsionForce { get; set; }
 }
 
@@ -28,19 +32,19 @@ public interface IAttackMask
 public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IAttackStats, IAttackMask
 {
     [Header("Health")]
-    [SerializeField] private float maxHP;
-    [SerializeField] private float armor;
-    [SerializeField] private float repulsionResistance;
+    [SerializeField] protected float maxHP;
+    [SerializeField] protected float armor;
+    [SerializeField] protected float repulsionResistance;
     [Header("Movement")]
-    [SerializeField] private float speed;
+    [SerializeField] protected float speed;
     [Header("Attack")]
-    [SerializeField] private float damage;
-    [SerializeField] private float attackRange;
-    [SerializeField] private float attackSpeed;
-    [SerializeField] private float repulsionForce = 4f;
+    [SerializeField] protected float damage;
+    [SerializeField] protected float attackRange;
+    [SerializeField] protected float attackSpeed;
+    [SerializeField] protected float repulsionForce = 4f;
     [Header("AttackMask")]
-    private LayerMask layerMask;
-    private LayerMask ignoreMask;
+    [SerializeField] protected LayerMask layerMask;
+    [SerializeField] protected LayerMask ignoreMask;
 
     public float MaxHP
     {

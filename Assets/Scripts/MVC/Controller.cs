@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using UnityEngine;
 
 public abstract class Controller : MonoBehaviour 
@@ -8,7 +7,6 @@ public abstract class Controller : MonoBehaviour
     protected View view;
     [SerializeField] protected BaseWeapon weapon;
     [SerializeField] protected Transform weaponSlot;
-    [SerializeField] protected BaseStats baseStats;
     public Repulsiveness repulsiveness;
 
     protected List<Artifact> ActiveArtifacts = new();
@@ -43,16 +41,27 @@ public abstract class Controller : MonoBehaviour
         }
     }
 
-    public void AddWeapor(BaseWeapon newWeapon) 
+    public void AddWeapon(BaseWeapon newWeapon) 
     {
         if(weapon == null)
         {
-            BaseWeapon weaponInstance = Instantiate(newWeapon, weaponSlot); 
+            BaseWeapon weaponInstance = Instantiate(newWeapon, weaponSlot);
+            model.InitializeCurrentWeaponAttackSpeed(newWeapon.baseAttackTime);
             weapon = weaponInstance;
-            weapon.AddStats(baseStats);
+            weapon.UpdateWeaponStats(model.stats, model.calculatedAttackSpeed);
+            model.AttackSpeedCalculate();
+            view.AttackSpeedAnimChanged(model.calculatedAttackSpeed);
         }
     }
-
+    public void RemoveWeapon()
+    {
+        if (weapon != null)
+        {
+            Destroy(weapon.gameObject);
+            weapon = null;
+            model.InitializeCurrentWeaponAttackSpeed(1);
+        }
+    }
 
     public void ApplyAmp(Amplifier amp) => model.ApplyAmp(amp);
     public void RemoveAmp(Amplifier amp) => model.RemoveAmp(amp);
@@ -71,14 +80,7 @@ public abstract class Controller : MonoBehaviour
         }
     }
 
-    public void RemoveWeapon()
-    {
-        if (weapon != null)
-        {
-            Destroy(weapon.gameObject);
-            weapon = null;
-        }
-    }
+    public abstract void SetSide(IAttackMask masks = null, string controllerTag = null, int layerIndex = 0);
 
     public abstract void Die();
 

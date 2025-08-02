@@ -14,15 +14,15 @@ public class SlimeAttackState : EnemyState
 
     public override void StateExecute()
     {
-        if (enemyController.isAngry)
+        if (enemyController.isAngry && player != null)
         {
+            enemyMovement.LookAtTarget(player);
             graundet = enemyMovement.GroundCheck();
             weapon.StartOrStopAttack(!graundet);
             if (timer <= 0 && graundet)
             {
                 enemyMovement.Jump(30, 35, player.position);
-                timer = jumpTimer;
-                
+                timer = jumpTimer / model.calculatedAttackSpeed;
             }
             else
             {

@@ -1,11 +1,11 @@
 using System;
-using Unity.VisualScripting;
-using UnityEngine.Rendering;
 
 public abstract class Model
 {
     public BaseStats stats;
     public float HP;
+    public float calculatedAttackSpeed;
+    private float currentAttackAnim = 1;
 
     public BaseStats CurrentStats { get; }
 
@@ -16,7 +16,8 @@ public abstract class Model
     {
         stats = baseStats;
         HP = stats.MaxHP;
-        CurrentStats = baseStats.CloneForRuntime();
+        AttackSpeedCalculate();
+        //CurrentStats = baseStats.CloneForRuntime(); РђРґРµР»РёРЅР° РЅРµ СЂР°Р±РѕС‚Р°РµС‚. РџРѕС„РёРєСЃРё.
     }
 
     public virtual void TakeDamage(float damage)
@@ -57,12 +58,27 @@ public abstract class Model
         RecalculateStats();
     }
 
-    private void RecalculateStats() //пересчёт всех статов
+    public void AttackSpeedCalculate()
+    {
+        calculatedAttackSpeed = stats.AttackSpeed / (100 * currentAttackAnim);
+        calculatedAttackSpeed = Math.Clamp(calculatedAttackSpeed, 0.1f, 6); //min Рё max Р·РЅР°С‡РµРЅРёСЏ 0.1 Рё 6
+    }
+
+    public void InitializeCurrentWeaponAttackSpeed(float attackSpeed)
+    {
+        currentAttackAnim = attackSpeed;
+        AttackSpeedCalculate();
+    }
+
+    private void RecalculateStats() 
     {
         CurrentStats.Damage = Amplifiers.GetModifiedValue(StatType.Damage, stats.Damage);
         CurrentStats.MaxHP = Amplifiers.GetModifiedValue(StatType.MaxHP, stats.MaxHP);
         CurrentStats.AttackRange = Amplifiers.GetModifiedValue(StatType.AttackRange, stats.AttackRange);
         CurrentStats.AttackSpeed = Amplifiers.GetModifiedValue(StatType.AttackSpeed, stats.AttackSpeed);
         CurrentStats.Armor = Amplifiers.GetModifiedValue(StatType.Armor, stats.Armor);
+
+        AttackSpeedCalculate();
     }
 } 
+ 

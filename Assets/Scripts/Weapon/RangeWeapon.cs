@@ -6,8 +6,13 @@ public class RangeWeapon : BaseWeapon
     {
         if (isAttack && Time.time >= timer)
         {
-            Shooting(attackStats.Damage, attackStats.AttackRange, attackStats.RepulsionForce);
-            timer = Time.time + attackStats.AttackSpeed * attackSpeedMultiplier;
+            RangeAttack();
+            timer = Time.time + (1 / calculatedAttackSpeed);
         }
+    }
+
+    public virtual void RangeAttack()
+    {
+        Shooting(attackStats.Damage, attackStats.AttackRange, attackStats.RepulsionForce);
     }
 }

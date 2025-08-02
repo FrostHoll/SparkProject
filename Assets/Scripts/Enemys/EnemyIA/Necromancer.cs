@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class StarJelly : BaseEnemy
+public class Necromancer : EnemyBaseAI
 {
     public override EnemyState CreateEnemyAttackState(EnemyController enemyController, Model enemyModel, BaseWeapon baseWeapon)
     {
-        return new GravityCrushAttackState(enemyController, enemyModel, baseWeapon);
+        return new EnemyMeleeAttackState(enemyController, enemyModel, baseWeapon);
     }
 }

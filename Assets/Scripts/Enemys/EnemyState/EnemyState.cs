@@ -8,7 +8,7 @@ public abstract class EnemyState
     protected View view;
     protected Model model;
     protected BaseWeapon weapon; 
-    protected BaseEnemy baseEnemy;
+    protected EnemyBaseAI baseEnemy;
 
     public EnemyState(EnemyController enemyController, Model enemyModel, BaseWeapon baseWeapon)
     {
@@ -18,11 +18,8 @@ public abstract class EnemyState
         view = enemyController.GetComponent<EnemyView>();
         model = enemyModel;
         weapon = baseWeapon; 
-        baseEnemy = enemyController.GetComponent<BaseEnemy>();
+        baseEnemy = enemyController.GetComponent<EnemyBaseAI>();
     }
 
     public abstract void StateExecute();
-    
-
-
 }

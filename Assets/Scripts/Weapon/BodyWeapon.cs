@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SlimeBodyWeapon : MeleeWeapon
+public class BodyWeapon : MeleeWeapon
 {
     [SerializeField] private float repulsionForce = 8;
     private Controller ownerController;

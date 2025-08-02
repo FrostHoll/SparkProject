@@ -11,6 +11,7 @@ public class GravityCrushAttackState : EnemyState
         : base(enemyController, enemyModel, baseWeapon)
     {
         rb = enemyController.GetComponent<Rigidbody>();
+        timeToJump /= model.calculatedAttackSpeed;
         timer = timeToJump;
     }
 
@@ -18,7 +19,7 @@ public class GravityCrushAttackState : EnemyState
 
     public override void StateExecute()
     {
-        if (enemyController.isAngry)
+        if (enemyController.isAngry && player != null)
         {
             weapon.StartOrStopAttack(!enemyMovement.GroundCheck());
             if (timer <= 0)
