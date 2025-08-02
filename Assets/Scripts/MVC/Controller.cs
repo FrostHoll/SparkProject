@@ -83,5 +83,4 @@ public abstract class Controller : MonoBehaviour
     public abstract void SetSide(IAttackMask masks = null, string controllerTag = null, int layerIndex = 0);
 
     public abstract void Die();
-
 }

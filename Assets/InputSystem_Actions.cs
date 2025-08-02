@@ -189,6 +189,24 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""59584db5-6282-4763-9ab0-b76a27ae04ee"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HotKey"",
+                    ""type"": ""Button"",
+                    ""id"": ""5c021e7f-07a5-47fb-b18e-4217584fe490"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -596,6 +614,28 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Interacte"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""feff8d58-8bfe-4a57-8b7d-e34677b0fbac"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""98de12a5-32c1-47b6-b87e-00f9c3cf4089"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HotKey"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1194,6 +1234,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Interacte = m_Player.FindAction("Interacte", throwIfNotFound: true);
+        m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
+        m_Player_HotKey = m_Player.FindAction("HotKey", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1298,6 +1340,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Interacte;
+    private readonly InputAction m_Player_Inventory;
+    private readonly InputAction m_Player_HotKey;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1353,6 +1397,14 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Interacte".
         /// </summary>
         public InputAction @Interacte => m_Wrapper.m_Player_Interacte;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Inventory".
+        /// </summary>
+        public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/HotKey".
+        /// </summary>
+        public InputAction @HotKey => m_Wrapper.m_Player_HotKey;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1412,6 +1464,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Interacte.started += instance.OnInteracte;
             @Interacte.performed += instance.OnInteracte;
             @Interacte.canceled += instance.OnInteracte;
+            @Inventory.started += instance.OnInventory;
+            @Inventory.performed += instance.OnInventory;
+            @Inventory.canceled += instance.OnInventory;
+            @HotKey.started += instance.OnHotKey;
+            @HotKey.performed += instance.OnHotKey;
+            @HotKey.canceled += instance.OnHotKey;
         }
 
         /// <summary>
@@ -1456,6 +1514,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Interacte.started -= instance.OnInteracte;
             @Interacte.performed -= instance.OnInteracte;
             @Interacte.canceled -= instance.OnInteracte;
+            @Inventory.started -= instance.OnInventory;
+            @Inventory.performed -= instance.OnInventory;
+            @Inventory.canceled -= instance.OnInventory;
+            @HotKey.started -= instance.OnHotKey;
+            @HotKey.performed -= instance.OnHotKey;
+            @HotKey.canceled -= instance.OnHotKey;
         }
 
         /// <summary>
@@ -1833,6 +1897,20 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInteracte(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Inventory" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnInventory(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "HotKey" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnHotKey(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
