@@ -1,20 +1,32 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class OpenInventory : MonoBehaviour
 {
     private GameObject inventory;
+    private InputSystem_Actions inputActions;
 
     void Start()
     {
-        inventory = GetComponent<GameObject>();
         inventory.SetActive(false); // Disabling inventory at startup
     }
 
-    void Update()
+    private void Awake()
     {
-        if (Input.GetKeyUp(KeyCode.T))
-        {
-            inventory.SetActive(!inventory.activeSelf); // Disabling/enabling inventory
-        }
+        inputActions = new InputSystem_Actions();
+        inputActions.Enable();
+    }
+    private void OnEnable()
+    {
+        inputActions.Player.Inventory.performed += InventoryOpened;
+    }
+    private void OnDisable()
+    {
+        inputActions.Player.Inventory.performed -= InventoryOpened;
+    }
+
+    private void InventoryOpened(InputAction.CallbackContext obj)
+    {
+        inventory.SetActive(!inventory.activeSelf); // Disabling/enabling inventory
     }
 }

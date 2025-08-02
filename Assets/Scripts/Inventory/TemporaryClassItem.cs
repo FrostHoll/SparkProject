@@ -3,7 +3,8 @@ using UnityEngine;
 
 public enum ItemType
 {
-    Consumable
+    Consumable,
+    NotConsumable,
 }
 
 public abstract class Item : MonoBehaviour

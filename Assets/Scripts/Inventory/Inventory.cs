@@ -4,225 +4,33 @@ using UnityEngine.InputSystem;
 
 public class Inventory : MonoBehaviour
 {
-    // The "BOTTOM LINE OF THE INVENTORY", where the items are simply stored.
-    // Functions:
+    public int amountOfSlots { get; protected set; }
+    protected Item[] Items;
 
-    // - adding item;
-    // - adding item to a certain slot;
-    // - removing item;
-    // - getting item;
-    // - swapping items in two slots;
-    // - checking, if an item stored.
+    protected Inventory() {}
 
-    private const int inventorySize = 10;
-    private Item[] Items = new Item[inventorySize];
+    // potions = 12
+    // healing potions = 4
+    // skills = 4 (2/2, 2 choosed and 2 in inventory)
+    // weapons = 4 (2/2)
+    // throwing weapons = 6 (4/2)
 
-    public event Action OnInventoryChanged;
+    private InputSystem_Actions inputActions;
 
-    // void start and update?
-
-    // Adding item to inventory
-    public bool AddItem(Item newItem)
+    private void Awake()
     {
-        for (int i = 0; i < inventorySize; i++)
-        {
-            if (Items[i] != null &&
-                Items[i].itemName == newItem.itemName &&
-                Items[i].currentStack < Items[i].maxStack)
-            {
-                Items[i].currentStack++;
-                OnInventoryChanged?.Invoke();
-                return true;
-            }
-
-            else if (Items[i] != null)
-            {
-                Items[i] = newItem;
-                OnInventoryChanged?.Invoke();
-                return true;
-            }
-        }
-
-        Debug.Log("The Inventory Is Full!");
-        return false;
+        inputActions = new InputSystem_Actions();
+        inputActions.Enable();
     }
-
-    // Adding an item to a certain slot
-    public bool AddItemToSlot(Item newItem, int slotIndex)
-    {
-        if (slotIndex < 0 || slotIndex >= inventorySize) // ?
-        {
-            Debug.LogError("Incorrect Slot Index!");
-            return false;
-        }
-
-        if (Items[slotIndex] == null)
-        {
-            Items[slotIndex] = newItem;
-            OnInventoryChanged?.Invoke();
-            return true;
-        }
-        else if (Items[slotIndex].itemName == newItem.itemName &&
-                Items[slotIndex].currentStack < Items[slotIndex].maxStack)
-        {
-            Items[slotIndex].currentStack++;
-            OnInventoryChanged?.Invoke();
-            return true;
-        }
-
-        Debug.Log("The Slot Is Full Or The Stack Is Full!");
-        return false;
-    }
-
-    // Removing an item
-    public void RemoveItem(int slotIndex)
-    {
-        if (slotIndex < 0 || slotIndex >= inventorySize)
-        {
-            Debug.LogError("Incorrect Slot Index!");
-            return;
-        }
-
-        if (Items[slotIndex] != null)
-        {
-            Items[slotIndex].currentStack--;
-
-            if (Items[slotIndex].currentStack <= 0)
-            {
-                Destroy(Items[slotIndex].gameObject);
-                Items[slotIndex] = null;
-            }
-
-            OnInventoryChanged?.Invoke();
-        }
-    }
-
-    // Removing an item from a certain slot
-    public Item GetItem(int slotIndex)
-    {
-        if (slotIndex < 0 || slotIndex >= inventorySize)
-        {
-            Debug.LogError("Incorrect Slot Index!");
-            return null;
-        }
-
-        OnInventoryChanged?.Invoke();
-        return Items[slotIndex];
-    }
-
-    // Swaping the items in the slots
-    public void SwapItems(int slotIndexA, int slotIndexB)
-    {
-        if (slotIndexA < 0 || slotIndexA >= inventorySize ||
-            slotIndexB < 0 || slotIndexB >= inventorySize)
-        {
-            Debug.LogError("Incorrect Slot Index!");
-            return;
-        }
-
-        Item temp = Items[slotIndexA];
-        Items[slotIndexA] = Items[slotIndexB];
-        Items[slotIndexB] = temp;
-
-        OnInventoryChanged?.Invoke();
-    }
-
-    // Checking if there is an item in the inventory
-    public bool HasItem(string itemName, int count = 1)
-    {
-        int total = 0;
-
-        foreach (Item item in Items)
-        {
-            if (item != null && item.itemName == itemName)
-            {
-                total += item.currentStack;
-                if (total >= count) return true;
-            }
-        }
-
-        return false;
-    }
-
-    // The "hotKeys" slots, second line of the inventory
-    // Functions:
-
-    // - using item (new);
-
-    // ( from Inventory "BottomLine": )
-    // - adding item;
-    // - adding item to a certain slot;
-    // - removing item;
-    // - getting item;
-    // - swapping items in two slots;
-    // - checking, if an item stored.
 
     public InputAction playerControls;
 
-    private void Update()
+    private void OnEnable()
     {
-        if (Input.GetKeyUp(KeyCode.Alpha1))
-        {
-            UseItem(0);
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha2))
-        {
-            UseItem(1);
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha3))
-        {
-            UseItem(2);
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha4))
-        {
-            UseItem(3);
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha5))
-        {
-            UseItem(4);
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha6))
-        {
-            UseItem(5);
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha7))
-        {
-            UseItem(6);
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha8))
-        {
-            UseItem(7);
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha9))
-        {
-            UseItem(8);
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha0))
-        {
-            UseItem(9);
-        }
+        inputActions.Player.HotKey.performed += Items[slotIndex].ItemUse;
     }
-
-    // Using item
-    public void UseItem(int slotIndex)
+    private void OnDisable()
     {
-        if (slotIndex < 0 || slotIndex >= inventorySize)
-        {
-            Debug.LogError("Incorrect Slot Index!");
-            return;
-        }
-
-        if (Items[slotIndex] != null)
-        {
-            Items[slotIndex].ItemUse();
-
-            // If an item is stackable
-            if (Items[slotIndex].GetItemType() == ItemType.Consumable)
-            {
-                RemoveItem(slotIndex);
-            }
-        }
-        OnInventoryChanged?.Invoke();
+        inputActions.Player.HotKey.performed -= Items[slotIndex].ItemUse;
     }
-
 }

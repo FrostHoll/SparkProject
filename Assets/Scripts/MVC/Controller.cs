@@ -5,8 +5,6 @@ public abstract class Controller : MonoBehaviour
 {
     protected Model model;
     protected View view;
-    public PlayerController characterController;
-    public EnemyController enemyController;
     [SerializeField] protected BaseStats baseStats;
 
     private void Awake()
@@ -26,18 +24,11 @@ public abstract class Controller : MonoBehaviour
         view.UpdateHealthBar(model.HP,model.stats.MaxHP);
     }
 
-    public void CharacterAddArtifact(Artifact artifact)
+    public void AddArtifact(Artifact artifact)
     {
         if (artifact == null) return;
 
-        artifact.ApplyEffect(characterController);
-    }
-
-    public void EnemyAddArtifact(Artifact artifact)
-    {
-        if (artifact == null) return;
-
-        artifact.ApplyEffect(enemyController);
+        artifact.ApplyEffect(this);
     }
 
 }
