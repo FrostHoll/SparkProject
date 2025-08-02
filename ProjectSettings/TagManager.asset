@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Enemy
+  - Summon
   layers:
   - Default
   - TransparentFX
@@ -11,10 +13,10 @@ TagManager:
   - Surface
   - Water
   - UI
-  - NouLayer
+  - Enemy
   - Player
-  - 
-  - 
+  - Weapon
+  - ignoreMask
   - 
   - 
   - 

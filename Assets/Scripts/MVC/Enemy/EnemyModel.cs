@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class EnemyModel : Model
 {
-    public EnemyModel(BaseStats baseStats) : base(baseStats)
+    public EnemyModel(EnemyStats baseStats) : base(baseStats)
     {
-
+        stats = baseStats;
     }
 }

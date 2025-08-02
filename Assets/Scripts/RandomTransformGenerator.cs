@@ -2,7 +2,7 @@ using UnityEngine;
 
 public static class RandomTransformGenerator
 {
-    public static Vector3 CreateRandomTransformNearObject(Transform objectTransform,float maxRadius,float minRadius, float heightOffset)
+    public static Vector3 CreateRandomTransformNearObject(Transform objectTransform,float maxRadius,float minRadius, float heightOffset, bool ignorIsPos = false)
     {
         for (int i = 0; i < 20; i++)  
         {
@@ -10,7 +10,8 @@ public static class RandomTransformGenerator
             Vector3 randomPosition2D = randomDirection * Random.Range(minRadius, maxRadius);
             Vector3 randomPosition = objectTransform.position + new Vector3(randomPosition2D.x, heightOffset, randomPosition2D.y);
 
-            
+            if(ignorIsPos) return randomPosition;
+
             if (!IsPositionBlocked(randomPosition)) 
             {
                 return randomPosition;

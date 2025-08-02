@@ -1,29 +1,50 @@
 using UnityEngine;
 
-public interface IAttackStats
+public interface IAttackSpeed
 {
-    float Damage { get; set; }
-    float AttackRange { get; set; }
     float AttackSpeed { get; set; }
 }
 
-public interface IHealthStats
+public interface IAttackStats : IAttackSpeed
+{
+    float Damage { get; set; }
+    float AttackRange { get; set; }
+    float RepulsionForce { get; set; }
+}
+
+public interface IRepulsionResistance
+{
+    float RepulsionResistance { get; set; }
+}
+
+public interface IHealthStats : IRepulsionResistance
 {
     float MaxHP { get; set; }
     float Armor {  get; set; }
 }
 
-public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IAttackStats 
+public interface IAttackMask
+{
+    LayerMask LayerMask { get; set; } //чему должна наносить урон
+    LayerMask IgnoreMask { get; set; } //что должна игнорировать
+}
+
+public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IAttackStats, IAttackMask
 {
     [Header("Health")]
-    [SerializeField] private float maxHP;
-    [SerializeField] private float armor;
+    [SerializeField] protected float maxHP;
+    [SerializeField] protected float armor;
+    [SerializeField] protected float repulsionResistance;
     [Header("Movement")]
-    [SerializeField] private float speed;
+    [SerializeField] protected float speed;
     [Header("Attack")]
-    [SerializeField] private float damage;
-    [SerializeField] private float attackRange;
-    [SerializeField] private float attackSpeed;
+    [SerializeField] protected float damage;
+    [SerializeField] protected float attackRange;
+    [SerializeField] protected float attackSpeed;
+    [SerializeField] protected float repulsionForce = 4f;
+    [Header("AttackMask")]
+    [SerializeField] protected LayerMask layerMask;
+    [SerializeField] protected LayerMask ignoreMask;
 
     public float MaxHP
     {
@@ -35,12 +56,16 @@ public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IA
         get { return armor; }
         set { armor = value; }
     }
+    public float RepulsionResistance
+    {
+        get { return repulsionResistance; }
+        set { repulsionResistance = value; }
+    }
     public float Speed
     {
         get { return speed; }
         set { speed = value; }
     }
-
     public float Damage
     {
         get { return damage; }
@@ -55,5 +80,36 @@ public abstract class BaseStats : ScriptableObject, IHealthStats, IMoveSpeed, IA
     {
         get { return attackSpeed; }
         set { attackSpeed = value; }
+    }
+
+    public float RepulsionForce
+    {
+        get { return repulsionForce; }
+        set { repulsionForce = value; }
+    }
+
+    public BaseStats CloneForRuntime()
+    {
+        var copy = CreateInstance<BaseStats>();
+        copy.maxHP = maxHP;
+        copy.armor = armor;
+        copy.speed = speed;
+        copy.damage = damage;
+        copy.attackRange = attackRange;
+        copy.attackSpeed = attackSpeed;
+        copy.repulsionForce = repulsionForce;
+        return copy;
+    }
+
+    public LayerMask LayerMask
+    {
+        get { return layerMask; }
+        set { layerMask = value; }
+    }
+
+    public LayerMask IgnoreMask
+    {
+        get { return ignoreMask; }
+        set { ignoreMask = value; }
     }
 }
