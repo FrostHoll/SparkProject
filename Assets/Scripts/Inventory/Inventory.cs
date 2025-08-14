@@ -1,36 +1,133 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using System;
 
-public class Inventory : MonoBehaviour
+public enum InventoryListType
 {
-    public int amountOfSlots { get; protected set; }
-    protected Item[] Items;
+    WeaponSlots,
+    SkillSlots,
+    ThrowableSlots,
+    PotionSlots,
+    Weapons,
+    Skills,
+}
 
-    protected Inventory() {}
+public class Inventory 
+{
+    [Header("Inventory")]
+    public WeaponItem[] weaponSlots;
+    public SkillItem[] skillSlots;
+    public Item[] throwablesSlots;
+    public Item[] potionsSlots;
+    [Header("QuickAccessToolbar")]
+    public WeaponItem[] weapons;
+    public SkillItem[] skills;
+    [Header("Artifacts")]
+    public List<Artifact> artifacts;
 
-    // potions = 12
-    // healing potions = 4
-    // skills = 4 (2/2, 2 choosed and 2 in inventory)
-    // weapons = 4 (2/2)
-    // throwing weapons = 6 (4/2)
+    public event Action OnWeaponsChanged;
 
-    private InputSystem_Actions inputActions;
+    public Controller controller; //возможно здесь его не должно быть
 
-    private void Awake()
+    public Inventory(Controller controller)
     {
-        inputActions = new InputSystem_Actions();
-        inputActions.Enable();
+        weaponSlots = new WeaponItem[10];
+        skillSlots = new SkillItem[10];
+        throwablesSlots = new Item[5];
+        potionsSlots = new Item[5];
+        weapons = new WeaponItem[2];
+        skills = new SkillItem[2];
+        artifacts = new List<Artifact>();
+        this.controller = controller;
     }
 
-    public InputAction playerControls;
-
-    private void OnEnable()
+    public void AddItem(Item item)
     {
-        inputActions.Player.HotKey.performed += Items[slotIndex].ItemUse;
+        switch (item.type)
+        {
+            case ItemType.Weapon:
+                if (!AddItemToSlot(weapons, item))
+                {
+                    AddItemToSlot(weaponSlots, item);
+                }
+                else
+                {
+                    OnWeaponsChanged();
+                }
+                break;
+            case ItemType.Skill:
+                if (!AddItemToSlot(skills, item))
+                {
+                    AddItemToSlot(skillSlots, item);
+                }
+                break;
+            case ItemType.Throwable:
+                AddItemToSlot(throwablesSlots, item);
+                break;
+            case ItemType.Potion:
+                AddItemToSlot(potionsSlots, item);
+                break;
+            case ItemType.Artifact:
+                if (item is ArtifactItem artifact)
+                {
+                    AddArtifact(artifact);
+                }
+                break;
+        }
     }
-    private void OnDisable()
+
+    bool AddItemToSlot(Item[] inventorySlots, Item item)
     {
-        inputActions.Player.HotKey.performed -= Items[slotIndex].ItemUse;
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            if (inventorySlots[i] == null)
+            {
+                inventorySlots[i] = item;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void AddArtifact(ArtifactItem artifact)
+    {
+        artifacts.Add(artifact.artifact);
+        artifact.artifact.ApplyEffect(controller);
+    }
+
+    public bool MoveItem(InventoryListType from, int fromIndex, InventoryListType to, int toIndex)
+    {
+        //откуда
+        Item[] sourceList = GetInventoryList(from);
+
+        //откуда
+        Item itemToMove = sourceList[fromIndex];
+
+        //куда
+        Item[] destinationList = GetInventoryList(to);
+
+        // Перемещаем предмет в слот куда
+        destinationList[toIndex] = itemToMove;
+
+        sourceList[fromIndex] = null;
+
+        OnWeaponsChanged();
+
+        return true;
+    }
+
+    private Item[] GetInventoryList(InventoryListType listType)
+    {
+        switch (listType)
+        {
+            case InventoryListType.WeaponSlots: return weaponSlots;
+            case InventoryListType.SkillSlots: return skillSlots;
+            case InventoryListType.ThrowableSlots: return throwablesSlots;
+            case InventoryListType.PotionSlots: return potionsSlots;
+            case InventoryListType.Weapons: return weapons;
+            case InventoryListType.Skills: return skills;
+        }
+        Debug.Log("Тут ошибочка с enum");
+        return null;
     }
 }

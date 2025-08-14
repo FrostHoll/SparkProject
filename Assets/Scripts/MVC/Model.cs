@@ -7,8 +7,6 @@ public abstract class Model
     public float calculatedAttackSpeed;
     private float currentAttackAnim = 1;
 
-    public BaseStats CurrentStats { get; }
-
     public event Action<float, float> HealthChanged;
     public AmplifiersWrapper Amplifiers { get; } = new();
 
@@ -17,7 +15,6 @@ public abstract class Model
         stats = baseStats;
         HP = stats.MaxHP;
         AttackSpeedCalculate();
-        //CurrentStats = baseStats.CloneForRuntime(); Аделина не работает. Пофикси.
     }
 
     public virtual void TakeDamage(float damage)
@@ -72,11 +69,11 @@ public abstract class Model
 
     private void RecalculateStats() 
     {
-        CurrentStats.Damage = Amplifiers.GetModifiedValue(StatType.Damage, stats.Damage);
-        CurrentStats.MaxHP = Amplifiers.GetModifiedValue(StatType.MaxHP, stats.MaxHP);
-        CurrentStats.AttackRange = Amplifiers.GetModifiedValue(StatType.AttackRange, stats.AttackRange);
-        CurrentStats.AttackSpeed = Amplifiers.GetModifiedValue(StatType.AttackSpeed, stats.AttackSpeed);
-        CurrentStats.Armor = Amplifiers.GetModifiedValue(StatType.Armor, stats.Armor);
+        stats.Damage = Amplifiers.GetModifiedValue(StatType.Damage, stats.Damage);
+        stats.MaxHP = Amplifiers.GetModifiedValue(StatType.MaxHP, stats.MaxHP);
+        stats.AttackRange = Amplifiers.GetModifiedValue(StatType.AttackRange, stats.AttackRange);
+        stats.AttackSpeed = Amplifiers.GetModifiedValue(StatType.AttackSpeed, stats.AttackSpeed);
+        stats.Armor = Amplifiers.GetModifiedValue(StatType.Armor, stats.Armor);
 
         AttackSpeedCalculate();
     }

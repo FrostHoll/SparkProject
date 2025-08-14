@@ -4,14 +4,20 @@ using UnityEngine.InputSystem;
 public class PlayerController : Controller
 {
     [SerializeField] CharacterStats characterStats;
+    private InventoryInputs inventoryInputs;
     private PlayerMovement playerMovement;
     public InputSystem_Actions inputActions;
-    public BaseWeapon dopWeapon;
+    private PlayerInventory playerInventory;
+    public Item dopWeapon;
 
     protected void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
-        model = new PlayerModel(characterStats);
+        inventoryInputs = GetComponent<InventoryInputs>();
+        playerInventory = GetComponent<PlayerInventory>();
+        model = new PlayerModel(CopyPlayerStats(characterStats));
+        playerInventory.InitializationPlayerInventory(this);
+        inventoryInputs.Initialization(toolbarController);
         repulsiveness = new Repulsiveness(this, model.stats);
         model.HealthChanged += view.OnHealthChanged;
         SetSide();
@@ -48,23 +54,6 @@ public class PlayerController : Controller
         base.Update();
 
         playerMovement.Move(inputActions.Player.Move,model.stats.Speed);
-
-        if (Input.GetKeyUp(KeyCode.E)) //для проверки
-        {
-            ApplyHealing(10f);
-        }
-        if (Input.GetKeyUp(KeyCode.R))
-        {
-            TakeDamage(10f);
-        }
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            AddWeapon(dopWeapon);
-        }
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            RemoveWeapon();
-        }
     }
     private void StartAttack(InputAction.CallbackContext obj)
     {
@@ -97,8 +86,20 @@ public class PlayerController : Controller
         gameObject.tag = setTag == null ? "Player" : setTag;
     }
 
-    public void CollectArtifact(Artifact artifact)
+    public override void AddItemInInventory(Item item)
     {
-        AddArtifact(artifact);
+        playerInventory.AddItem(item);
+        base.AddItemInInventory(item);
+    }
+
+    public void MoveItemInInventory(InventoryListType where, int whereIndex, InventoryListType whereFrom, int whereFromIndex)
+    {
+        inventory.MoveItem(where, whereIndex, whereFrom, whereFromIndex);
+    }
+
+    public CharacterStats CopyPlayerStats(CharacterStats playerStats)
+    {
+        CharacterStats statsCopy = Instantiate(playerStats);
+        return statsCopy;
     }
 }

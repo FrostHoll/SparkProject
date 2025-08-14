@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2633706661576431088}
   - component: {fileID: 4372993242577890076}
   - component: {fileID: 2248941332909713017}
+  - component: {fileID: -5977705190436341815}
   m_Layer: 0
   m_Name: ItemFromChest1
   m_TagString: Untagged
@@ -137,6 +138,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-5977705190436341815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2532861376861596234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40ec6b32dcc3d764086b41fda8a61e1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: f70637a587820c0458b55bfa88ddf4e0, type: 2}
 --- !u!1 &6294691187422428340
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,13 +7,16 @@ public abstract class Controller : MonoBehaviour
     protected View view;
     [SerializeField] protected BaseWeapon weapon;
     [SerializeField] protected Transform weaponSlot;
+    protected QuickAccessToolbarController toolbarController;
+    protected Inventory inventory;
     public Repulsiveness repulsiveness;
-
-    protected List<Artifact> ActiveArtifacts = new();
 
     protected virtual void Awake()
     {
         view = GetComponent<View>();
+        inventory = new Inventory(this);
+        toolbarController = new QuickAccessToolbarController(this, inventory.weapons);
+        inventory.OnWeaponsChanged += toolbarController.UpdateToolBar;
     }
 
     protected virtual void Update()
@@ -66,21 +69,22 @@ public abstract class Controller : MonoBehaviour
     public void ApplyAmp(Amplifier amp) => model.ApplyAmp(amp);
     public void RemoveAmp(Amplifier amp) => model.RemoveAmp(amp);
 
-    public void AddArtifact(Artifact artifact)
-    {
-        ActiveArtifacts.Add(artifact);
-        artifact.ApplyEffect(this);
-    }
+    
 
-    public void RemoveArtifact(Artifact artifact)
+    public void RemoveArtifact(ArtifactItem artifact)
     {
-        if (ActiveArtifacts.Remove(artifact))
+        if (inventory.artifacts.Remove(artifact.artifact))
         {
-            artifact.RemoveEffect(this);
+            artifact.artifact.RemoveEffect(this);
         }
     }
 
     public abstract void SetSide(IAttackMask masks = null, string controllerTag = null, int layerIndex = 0);
 
     public abstract void Die();
+
+    public virtual void AddItemInInventory(Item item)
+    {
+        inventory.AddItem(item);
+    }
 }
