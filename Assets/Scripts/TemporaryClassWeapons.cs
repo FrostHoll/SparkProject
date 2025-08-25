@@ -12,9 +12,4 @@ public class Weapon : Item
     public WeaponType weaponType;
 
     public WeaponType GetWeaponType() { return weaponType; }
-
-    public override void ItemUse()
-    {
-
-    }
 }

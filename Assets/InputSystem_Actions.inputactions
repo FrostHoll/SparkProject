@@ -114,13 +114,49 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "HotKey",
+                    "name": "HotKey1",
                     "type": "Button",
-                    "id": "5c021e7f-07a5-47fb-b18e-4217584fe490",
+                    "id": "dfd2f0c5-1a44-41e2-9f23-edf600d327b1",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "HotKey2",
+                    "type": "Button",
+                    "id": "95c9607c-dde5-4d1c-b968-4563cee0ae7f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HotKey3",
+                    "type": "Button",
+                    "id": "757df2f0-8b83-47a4-84e7-076ecc6d8d89",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HotKey4",
+                    "type": "Button",
+                    "id": "bedcfe82-4692-4488-95af-99b830c5ac79",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MouseScroll",
+                    "type": "Value",
+                    "id": "6fc022cd-5d55-4a52-957a-b3e7277dda5c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -534,7 +570,7 @@
                 {
                     "name": "",
                     "id": "feff8d58-8bfe-4a57-8b7d-e34677b0fbac",
-                    "path": "<Keyboard>/t",
+                    "path": "<Keyboard>/y",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -544,12 +580,56 @@
                 },
                 {
                     "name": "",
-                    "id": "98de12a5-32c1-47b6-b87e-00f9c3cf4089",
-                    "path": "<Keyboard>/r",
+                    "id": "e1fe7806-5332-4caa-9490-664efd985a90",
+                    "path": "<Keyboard>/1",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "HotKey",
+                    "action": "HotKey1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f4afeb5c-42ad-453a-b56e-c6559edba2f0",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HotKey2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "37b12309-419f-485d-bab9-f0f362dadf95",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HotKey3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8f05deb4-a15b-45df-86bb-ffb243eca8ec",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HotKey4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d2c76110-9a78-4a59-b19e-e81706864705",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MouseScroll",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

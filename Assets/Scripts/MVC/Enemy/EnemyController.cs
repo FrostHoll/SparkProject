@@ -38,15 +38,6 @@ public class EnemyController : Controller
         base.Update();
 
         if(enemyState != null) enemyState.StateExecute();
-
-        if (Input.GetKeyUp(KeyCode.E)) //для проверки
-        {
-            ApplyHealing(10f);
-        }
-        if (Input.GetKeyUp(KeyCode.R))
-        {
-            TakeDamage(10f);
-        }
     }
 
     public void EnemyBlink() //используеться в анимации

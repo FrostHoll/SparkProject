@@ -200,13 +200,49 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""HotKey"",
+                    ""name"": ""HotKey1"",
                     ""type"": ""Button"",
-                    ""id"": ""5c021e7f-07a5-47fb-b18e-4217584fe490"",
+                    ""id"": ""dfd2f0c5-1a44-41e2-9f23-edf600d327b1"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HotKey2"",
+                    ""type"": ""Button"",
+                    ""id"": ""95c9607c-dde5-4d1c-b968-4563cee0ae7f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HotKey3"",
+                    ""type"": ""Button"",
+                    ""id"": ""757df2f0-8b83-47a4-84e7-076ecc6d8d89"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HotKey4"",
+                    ""type"": ""Button"",
+                    ""id"": ""bedcfe82-4692-4488-95af-99b830c5ac79"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseScroll"",
+                    ""type"": ""Value"",
+                    ""id"": ""6fc022cd-5d55-4a52-957a-b3e7277dda5c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -620,7 +656,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""feff8d58-8bfe-4a57-8b7d-e34677b0fbac"",
-                    ""path"": ""<Keyboard>/t"",
+                    ""path"": ""<Keyboard>/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -630,12 +666,56 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""98de12a5-32c1-47b6-b87e-00f9c3cf4089"",
-                    ""path"": ""<Keyboard>/r"",
+                    ""id"": ""e1fe7806-5332-4caa-9490-664efd985a90"",
+                    ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""HotKey"",
+                    ""action"": ""HotKey1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f4afeb5c-42ad-453a-b56e-c6559edba2f0"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HotKey2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""37b12309-419f-485d-bab9-f0f362dadf95"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HotKey3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8f05deb4-a15b-45df-86bb-ffb243eca8ec"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HotKey4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d2c76110-9a78-4a59-b19e-e81706864705"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseScroll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1235,7 +1315,11 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Interacte = m_Player.FindAction("Interacte", throwIfNotFound: true);
         m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
-        m_Player_HotKey = m_Player.FindAction("HotKey", throwIfNotFound: true);
+        m_Player_HotKey1 = m_Player.FindAction("HotKey1", throwIfNotFound: true);
+        m_Player_HotKey2 = m_Player.FindAction("HotKey2", throwIfNotFound: true);
+        m_Player_HotKey3 = m_Player.FindAction("HotKey3", throwIfNotFound: true);
+        m_Player_HotKey4 = m_Player.FindAction("HotKey4", throwIfNotFound: true);
+        m_Player_MouseScroll = m_Player.FindAction("MouseScroll", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1341,7 +1425,11 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Interacte;
     private readonly InputAction m_Player_Inventory;
-    private readonly InputAction m_Player_HotKey;
+    private readonly InputAction m_Player_HotKey1;
+    private readonly InputAction m_Player_HotKey2;
+    private readonly InputAction m_Player_HotKey3;
+    private readonly InputAction m_Player_HotKey4;
+    private readonly InputAction m_Player_MouseScroll;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1402,9 +1490,25 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
         /// <summary>
-        /// Provides access to the underlying input action "Player/HotKey".
+        /// Provides access to the underlying input action "Player/HotKey1".
         /// </summary>
-        public InputAction @HotKey => m_Wrapper.m_Player_HotKey;
+        public InputAction @HotKey1 => m_Wrapper.m_Player_HotKey1;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/HotKey2".
+        /// </summary>
+        public InputAction @HotKey2 => m_Wrapper.m_Player_HotKey2;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/HotKey3".
+        /// </summary>
+        public InputAction @HotKey3 => m_Wrapper.m_Player_HotKey3;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/HotKey4".
+        /// </summary>
+        public InputAction @HotKey4 => m_Wrapper.m_Player_HotKey4;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/MouseScroll".
+        /// </summary>
+        public InputAction @MouseScroll => m_Wrapper.m_Player_MouseScroll;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1467,9 +1571,21 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Inventory.started += instance.OnInventory;
             @Inventory.performed += instance.OnInventory;
             @Inventory.canceled += instance.OnInventory;
-            @HotKey.started += instance.OnHotKey;
-            @HotKey.performed += instance.OnHotKey;
-            @HotKey.canceled += instance.OnHotKey;
+            @HotKey1.started += instance.OnHotKey1;
+            @HotKey1.performed += instance.OnHotKey1;
+            @HotKey1.canceled += instance.OnHotKey1;
+            @HotKey2.started += instance.OnHotKey2;
+            @HotKey2.performed += instance.OnHotKey2;
+            @HotKey2.canceled += instance.OnHotKey2;
+            @HotKey3.started += instance.OnHotKey3;
+            @HotKey3.performed += instance.OnHotKey3;
+            @HotKey3.canceled += instance.OnHotKey3;
+            @HotKey4.started += instance.OnHotKey4;
+            @HotKey4.performed += instance.OnHotKey4;
+            @HotKey4.canceled += instance.OnHotKey4;
+            @MouseScroll.started += instance.OnMouseScroll;
+            @MouseScroll.performed += instance.OnMouseScroll;
+            @MouseScroll.canceled += instance.OnMouseScroll;
         }
 
         /// <summary>
@@ -1517,9 +1633,21 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Inventory.started -= instance.OnInventory;
             @Inventory.performed -= instance.OnInventory;
             @Inventory.canceled -= instance.OnInventory;
-            @HotKey.started -= instance.OnHotKey;
-            @HotKey.performed -= instance.OnHotKey;
-            @HotKey.canceled -= instance.OnHotKey;
+            @HotKey1.started -= instance.OnHotKey1;
+            @HotKey1.performed -= instance.OnHotKey1;
+            @HotKey1.canceled -= instance.OnHotKey1;
+            @HotKey2.started -= instance.OnHotKey2;
+            @HotKey2.performed -= instance.OnHotKey2;
+            @HotKey2.canceled -= instance.OnHotKey2;
+            @HotKey3.started -= instance.OnHotKey3;
+            @HotKey3.performed -= instance.OnHotKey3;
+            @HotKey3.canceled -= instance.OnHotKey3;
+            @HotKey4.started -= instance.OnHotKey4;
+            @HotKey4.performed -= instance.OnHotKey4;
+            @HotKey4.canceled -= instance.OnHotKey4;
+            @MouseScroll.started -= instance.OnMouseScroll;
+            @MouseScroll.performed -= instance.OnMouseScroll;
+            @MouseScroll.canceled -= instance.OnMouseScroll;
         }
 
         /// <summary>
@@ -1905,12 +2033,40 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInventory(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "HotKey" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "HotKey1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnHotKey(InputAction.CallbackContext context);
+        void OnHotKey1(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "HotKey2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnHotKey2(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "HotKey3" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnHotKey3(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "HotKey4" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnHotKey4(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MouseScroll" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMouseScroll(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
